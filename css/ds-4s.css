@@ -9,7 +9,7 @@ header {
 	left: 0;
 	z-index: 2;
 	color: white;
-	background-color: #000066;
+	background-color: #0000cc;
 	clear: left;
 	text-align: center;
 	font-weight: bold;
@@ -20,7 +20,7 @@ header {
 	position: absolute;
 	top: 46px;
 	color: white;
-	background-color: #000066;
+	background-color: #0000cc;
 	text-align: inherit;
 	font-weight: inherit;
 	padding: inherit;
@@ -42,7 +42,7 @@ header {
 
 .dropmain:not(:hover) {
 	color: white;
-	background-color: #000066;
+	background-color: #0000cc;
 }
 
 footer {
@@ -53,7 +53,7 @@ footer {
 	width: 100%;
 	z-index: 2;
 	color: white;
-	background-color: #000066;
+	background-color: #0000cc;
 	clear: left;
 	text-align: center;
 	font-size: 8pt;
@@ -157,24 +157,24 @@ footer ul.menu li {
 }
 
 ul.menu li:hover:not(.active) {
-	background-color: #e2f3ff;
-	color: #000066;
+	background-color: #e6e6ff;
+	color: #0000cc;
 }
 
 ul.menu li.noclick:hover {
 	color: white;
-	background-color: #000066;
+	background-color: #0000cc;
 	cursor: default;
 }
 
 ul.menu li.homeclick:hover {
-	color: #000066;
-	background-color: #ffd86b;
+	color: #0000cc;
+	background-color: #ffff00;
 }
 
 ul.menu li.active {
 	background-color: white;
-	color: #0000a8;
+	color: #000099;
 }
 
 article {
@@ -219,47 +219,9 @@ article {
 	visibility: visible;
 }
 
-.circle {
-	display: inline-block;
-	line-height: 1em;
-	width: 1em;
-	border-radius: 50%;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	border: 1px solid;
-	text-align: center;
-}
-
-.circle_purple {
-	display: inline-block;
-	line-height: 1em;
-	width: 1em;
-	border-radius: 50%;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	color: purple;
-	border: 2px solid purple;
-	text-align: center;
-}
-
-.optional {
-	color: gray;
-	font-style: italic;
-	font-size: 10pt;
-}
-
-.optional::after {
-	content: "\00A0\00A0\00A0";
-}
-
 #input {
 	margin-top: 30px;
 	margin-bottom: 15px;
-}
-
-#formulations {
-	margin-top: 15px;
-	margin-bottom: 30px;
 }
 
 #input td {
@@ -271,42 +233,9 @@ article {
 	text-align: right;
 }
 
-#formulations tr:hover:not(.nohover) {
-	font-weight: bold;
-}
-
-#formulations th {
-	vertical-align: bottom;
-	text-align: center;
-	padding: 2px 5px;
-	border-bottom: 1px solid black;
-}
-
-#formulations td {
-	text-align: center;
-}
-
-#formulations tr:last-child {
-	border-style: none;
-}
-
-#formulations tr {
-	padding: 3px 0 3px 0;
-	border-bottom: 1px solid #dbdbdb;
-}
-
 table {
 	display: inline-block;
 	border-collapse: collapse;
-}
-
-table .notes_head {
-	text-align: left !important;
-}
-
-table .notes {
-	text-align: left !important;
-	font-size: 10pt;
 }
 
 table input[type="text"] {
@@ -321,86 +250,6 @@ td {
 
 select {
 	font-size: 12pt;
-}
-
-.dose {
-	color: red;
-}
-
-.day {
-	color: DarkOrange;
-}
-
-.kg {
-	color: blue;
-}
-
-.r2-1 {
-	background-color: #c4f7ff;
-}
-
-.r4-1 {
-	background-color: #c4ffd4;
-}
-
-.r7-1 {
-	background-color: #fffdc4;
-}
-
-.r14-1 {
-	background-color: #ffdec4;
-}
-
-.r16-1 {
-	background-color: #ffc4c4;
-}
-
-.liquid {
-	color: #6017ff;
-}
-
-.tablet {
-	color: #1751ff;
-}
-
-.chewable {
-	color: #a534eb;
-}
-
-.appropriate {
-	color: initial;
-}
-
-.inappropriate {
-	color: #a6a6a6;
-}
-
-.primary_low {
-	color: red;
-}
-
-.primary_low::after {
-	content: "\2193";	/*Down arrow*/
-}
-
-.primary_good {
-	/*Nothing*/
-}
-
-.primary_high {
-	color: red;
-}
-
-.primary_high::after {
-	content: "\2191";	/*Up arrow*/
-}
-
-.secondary_bad {
-	color: #a6a6a6;
-}
-
-.secondary_good {
-	/*Nothing*/
 }
 
 
