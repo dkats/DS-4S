@@ -1,0 +1,21 @@
+article {
+	margin: 0px;
+	padding: 0px 28px;
+	width: calc(100% - 2*28px);
+}
+
+#map {
+	margin: auto;
+}
+
+
+
+@media print{
+	
+}
+
+
+
+@media only screen and (max-width: 600px) {
+	
+}
