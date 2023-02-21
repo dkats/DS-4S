@@ -1,56 +1,255 @@
-var color_include = "#b3b3ff";
-var color_exclude = "#e6e600";
-var color_missing = "#ffff80";
-var hover_color_include = "#4d4dff";
-// var hover_color_exclude = "#e6e600";
-// var hover_color_missing = "#ffff80";
-var description_include = "Survey completed";
-var description_exclude = "Survey completed, but the organization did not meet inclusion criteria";
-var description_missing = "Survey not completed";
-var hide_include = "no";
-var hide_exclude = "no";
-var hide_missing = "no";
-var inactive_include = "no";
-var inactive_exclude = "no";
-var inactive_missing = "no";
-var zoomable_include = "no";
-var zoomable_exclude = "no";
-var zoomable_missing = "no";
+var data = [
+	{country: 'Albania', included: 'Included'},
+	{country: 'Argentina', included: 'Included'},
+	{country: 'Australia', included: 'Included'},
+	{country: 'Austria', included: 'Included'},
+	{country: 'Bangladesh', included: 'Included'},
+	{country: 'Bhutan', included: 'Excluded'},
+	{country: 'Botswana', included: 'Included'},
+	{country: 'Brazil', included: 'Included'},
+	{country: 'Canada', included: 'Included'},
+	{country: 'Chile', included: 'Included'},
+	{country: 'Colombia', included: 'Included'},
+	{country: 'Costa Rica', included: 'Excluded'},
+	{country: 'Dominican Republic', included: 'Included'},
+	{country: 'El Salvador', included: 'Included'},
+	{country: 'Estonia', included: 'Included'},
+	{country: 'Germany', included: 'Included'},
+	{country: 'Ghana', included: 'Included'},
+	{country: 'Guatemala', included: 'Included'},
+	{country: 'Indonesia', included: 'Included'},
+	{country: 'Italy', included: 'Included'},
+	{country: 'Jamaica', included: 'Included'},
+	{country: 'Japan', included: 'Included'},
+	{country: 'Kenya', included: 'Included'},
+	{country: 'Kosovo', included: 'Included'},
+	{country: 'Kyrgyzstan', included: 'Included'},
+	{country: 'Liberia', included: 'Included'},
+	{country: 'Lithuania', included: 'Included'},
+	{country: 'China', included: 'Excluded'},
+	{country: 'Malta', included: 'Included'},
+	{country: 'Mauritius', included: 'Excluded'},
+	{country: 'Myanmar', included: 'Included'},
+	{country: 'New Zealand', included: 'Included'},
+	{country: 'Nigeria', included: 'Included'},
+	{country: 'Pakistan', included: 'Included'},
+	{country: 'Palestine', included: 'Excluded'},
+	{country: 'Peru', included: 'Included'},
+	{country: 'Poland', included: 'Included'},
+	{country: 'Republic of Ireland', included: 'Included'},
+	{country: 'Russia', included: 'Included'},
+	{country: 'Rwanda', included: 'Included'},
+	{country: 'Saudi Arabia', included: 'Included'},
+	{country: 'Scotland', included: 'Excluded'},
+	{country: 'Singapore', included: 'Included'},
+	{country: 'South Africa', included: 'Included'},
+	{country: 'Spain', included: 'Included'},
+	{country: 'Sri Lanka', included: 'Included'},
+	{country: 'Sweden', included: 'Included'},
+	{country: 'Switzerland', included: 'Included'},
+	{country: 'Tajikistan', included: 'Excluded'},
+	{country: 'The Netherlands', included: 'Included'},
+	{country: 'Togo', included: 'Included'},
+	{country: 'Trinidad and Tobago', included: 'Excluded'},
+	{country: 'Turkey', included: 'Included'},
+	{country: 'Uganda', included: 'Included'},
+	{country: 'Ukraine', included: 'Excluded'},
+	{country: 'United Kingdom', included: 'Included'},
+	{country: 'United States', included: 'Included'},
+	{country: 'Uruguay', included: 'Included'},
+	{country: 'Zimbabwe', included: 'Included'},
+];
+for (let obj in data) {
+	data[obj].onMap = false;
+}
+
+let color_include = "#4d4dff";
+let color_exclude = "#e6e600";
+let color_missing = "#b3b3b3";
+let hover_color_include = "#8080ff";
+let hover_color_exclude = "#ffff1a";
+let hover_color_missing = "#d9d9d9";
+let description_include = "Survey completed";
+let description_exclude = "Survey completed, but the organization did not meet inclusion criteria";
+let description_missing = "Survey not completed";
+let url_include = null;
+let url_exclude = null;
+let url_missing = null;
+let image_url_include = null;
+let image_url_exclude = null;
+let image_url_missing = null;
+let image_position_include = null;
+let image_position_exclude = null;
+let image_position_missing = null;
+let hide_include = "no";
+let hide_exclude = "no";
+let hide_missing = "no";
+let inactive_include = "no";
+let inactive_exclude = "no";
+let inactive_missing = "no";
+let zoomable_include = "no";
+let zoomable_exclude = "no";
+let zoomable_missing = "no";
 
 function set_color(name) {
-	return color_include;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return color_include;
+				break;
+			case "Excluded":
+				// console.log(name + " has been excluded");
+				return color_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return color_missing;
 }
 
 function set_hover_color(name) {
-	return hover_color_include;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return hover_color_include;
+				break;
+			case "Excluded":
+				// console.log(name + " has been excluded");
+				return hover_color_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return hover_color_missing;
 }
 
 function set_description(name) {
-	return description_include;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return description_include;
+				break;
+			case "Excluded":
+				return description_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return description_missing;
 }
 
 function set_url(name) {
-	return null;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return url_include;
+				break;
+			case "Excluded":
+				// console.log(name + " has been excluded");
+				return url_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return url_missing;
 }
 
 function set_image_url(name) {
-	return null;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return image_url_include;
+				break;
+			case "Excluded":
+				// console.log(name + " has been excluded");
+				return image_url_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return image_url_missing;
 }
 
 function set_image_position(name) {
-	return null;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return image_position_include;
+				break;
+			case "Excluded":
+				// console.log(name + " has been excluded");
+				return image_position_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return image_position_missing;
 }
 
 function set_hide(name) {
-	return hide_include;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return hide_include;
+				break;
+			case "Excluded":
+				// console.log(name + " has been excluded");
+				return hide_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return hide_missing;
 }
 
 function set_inactive(name) {
-	return inactive_include;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return inactive_include;
+				break;
+			case "Excluded":
+				// console.log(name + " has been excluded");
+				return inactive_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return inactive_missing;
 }
 
 function set_zoomable(name) {
-	return zoomable_include;
+	let country = data.find(({country}) => country === name);
+
+	if(country != undefined) {
+		switch(country.included) {
+			case "Included":
+				return zoomable_include;
+				break;
+			case "Excluded":
+				// console.log(name + " has been excluded");
+				return zoomable_exclude;
+				break;
+		}
+	}
+	// console.log(name + " not in data set");
+	return zoomable_missing;
 }
 
 var simplemaps_worldmap_mapdata={
@@ -66,7 +265,7 @@ var simplemaps_worldmap_mapdata={
 	state_color: color_include,
 	state_hover_color: "#4d4dff",
 	// state_url: "https://simplemaps.com",
-	border_size: 1.5,
+	border_size: 1,
 	border_color: "#ffffff",
 	all_states_inactive: "no",
 	all_states_zoomable: "no",
@@ -131,2115 +330,531 @@ var simplemaps_worldmap_mapdata={
 	state_specific: {
 		AE: {
 			name: "United Arab Emirates",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: set_zoomable(this.name),
 		},
 		AF: {
 			name: "Afghanistan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: set_zoomable(this.name),
 		},
 		AL: {
 			name: "Albania",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		AM: {
 			name: "Armenia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		AO: {
 			name: "Angola",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		AR: {
 			name: "Argentina",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		AT: {
 			name: "Austria",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		AU: {
 			name: "Australia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		AZ: {
 			name: "Azerbaidjan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BA: {
 			name: "Bosnia-Herzegovina",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BD: {
 			name: "Bangladesh",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BE: {
 			name: "Belgium",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BF: {
 			name: "Burkina Faso",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BG: {
 			name: "Bulgaria",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BH: {
 			name: "Bahrain",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BI: {
 			name: "Burundi",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BJ: {
 			name: "Benin",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BN: {
 			name: "Brunei Darussalam",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BO: {
 			name: "Bolivia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BR: {
 			name: "Brazil",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BS: {
 			name: "Bahamas",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BT: {
 			name: "Bhutan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BW: {
 			name: "Botswana",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BY: {
 			name: "Belarus",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		BZ: {
 			name: "Belize",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CA: {
 			name: "Canada",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CD: {
 			name: "Congo",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CF: {
 			name: "Central African Republic",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CG: {
 			name: "Congo",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CH: {
 			name: "Switzerland",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CI: {
 			name: "Ivory Coast",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CL: {
 			name: "Chile",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CM: {
 			name: "Cameroon",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CN: {
 			name: "China",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CO: {
 			name: "Colombia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CR: {
 			name: "Costa Rica",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CU: {
 			name: "Cuba",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CV: {
 			name: "Cape Verde",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CY: {
 			name: "Cyprus",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		CZ: {
 			name: "Czech Republic",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		DE: {
 			name: "Germany",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		DJ: {
 			name: "Djibouti",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		DK: {
 			name: "Denmark",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		DO: {
 			name: "Dominican Republic",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		DZ: {
 			name: "Algeria",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		EC: {
 			name: "Ecuador",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		EE: {
 			name: "Estonia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		EG: {
 			name: "Egypt",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		EH: {
 			name: "Western Sahara",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ER: {
 			name: "Eritrea",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ES: {
 			name: "Spain",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ET: {
 			name: "Ethiopia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		FI: {
 			name: "Finland",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		FJ: {
 			name: "Fiji",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		FK: {
 			name: "Falkland Islands",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		FR: {
 			name: "France",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GA: {
 			name: "Gabon",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GB: {
 			name: "Great Britain",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GE: {
 			name: "Georgia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GF: {
 			name: "French Guyana",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GH: {
 			name: "Ghana",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GL: {
 			name: "Greenland",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GM: {
 			name: "Gambia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GN: {
 			name: "Guinea",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GQ: {
 			name: "Equatorial Guinea",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GR: {
 			name: "Greece",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GS: {
 			name: "S. Georgia & S. Sandwich Isls.",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GT: {
 			name: "Guatemala",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GW: {
 			name: "Guinea Bissau",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		GY: {
 			name: "Guyana",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		HN: {
 			name: "Honduras",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		HR: {
 			name: "Croatia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		HT: {
 			name: "Haiti",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		HU: {
 			name: "Hungary",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		IC: {
 			name: "Canary Islands",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ID: {
 			name: "Indonesia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		IE: {
 			name: "Ireland",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		IL: {
 			name: "Israel",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		IN: {
 			name: "India",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		IQ: {
 			name: "Iraq",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		IR: {
 			name: "Iran",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		IS: {
 			name: "Iceland",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		IT: {
 			name: "Italy",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		JM: {
 			name: "Jamaica",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		JO: {
 			name: "Jordan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		JP: {
 			name: "Japan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		KE: {
 			name: "Kenya",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		KG: {
 			name: "Kyrgyzstan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		KH: {
 			name: "Cambodia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		KP: {
 			name: "North Korea",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		KR: {
 			name: "South Korea",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		KW: {
 			name: "Kuwait",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		KZ: {
 			name: "Kazakhstan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		LA: {
 			name: "Laos",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		LK: {
 			name: "Sri Lanka",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		LR: {
 			name: "Liberia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		LS: {
 			name: "Lesotho",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		LT: {
 			name: "Lithuania",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		LU: {
 			name: "Luxembourg",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		LV: {
 			name: "Latvia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		LY: {
 			name: "Libya",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MA: {
 			name: "Morocco",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MD: {
 			name: "Moldavia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ME: {
 			name: "Montenegro",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MG: {
 			name: "Madagascar",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MK: {
 			name: "Macedonia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ML: {
 			name: "Mali",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MM: {
 			name: "Myanmar",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MN: {
 			name: "Mongolia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MR: {
 			name: "Mauritania",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MW: {
 			name: "Malawi",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MX: {
 			name: "Mexico",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MY: {
 			name: "Malaysia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		MZ: {
 			name: "Mozambique",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NA: {
 			name: "Namibia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NC: {
 			name: "New Caledonia (French)",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NE: {
 			name: "Niger",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NG: {
 			name: "Nigeria",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NI: {
 			name: "Nicaragua",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NL: {
 			name: "Netherlands",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NO: {
 			name: "Norway",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NP: {
 			name: "Nepal",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		NZ: {
 			name: "New Zealand",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		OM: {
 			name: "Oman",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PA: {
 			name: "Panama",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PE: {
 			name: "Peru",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PG: {
 			name: "Papua New Guinea",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PH: {
 			name: "Philippines",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PK: {
 			name: "Pakistan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PL: {
 			name: "Poland",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PR: {
 			name: "Puerto Rico",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PS: {
 			name: "Palestine",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PT: {
 			name: "Portugal",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		PY: {
 			name: "Paraguay",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		QA: {
 			name: "Qatar",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		RO: {
 			name: "Romania",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		RS: {
 			name: "Serbia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		RU: {
 			name: "Russia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		RW: {
 			name: "Rwanda",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SA: {
 			name: "Saudi Arabia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SB: {
 			name: "Solomon Islands",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SD: {
 			name: "Sudan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SE: {
 			name: "Sweden",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SI: {
 			name: "Slovenia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SK: {
 			name: "Slovak Republic",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SL: {
 			name: "Sierra Leone",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SN: {
 			name: "Senegal",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SO: {
 			name: "Somalia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SR: {
 			name: "Suriname",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SS: {
 			name: "South Sudan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SV: {
 			name: "El Salvador",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SY: {
 			name: "Syria",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		SZ: {
 			name: "Swaziland",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TD: {
 			name: "Chad",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TG: {
 			name: "Togo",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TH: {
 			name: "Thailand",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TJ: {
 			name: "Tadjikistan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TL: {
 			name: "East Timor",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TM: {
 			name: "Turkmenistan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TN: {
 			name: "Tunisia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TR: {
 			name: "Turkey",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TT: {
 			name: "Trinidad and Tobago",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TW: {
 			name: "Taiwan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		TZ: {
 			name: "Tanzania",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		UA: {
 			name: "Ukraine",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		UG: {
 			name: "Uganda",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		US: {
 			name: "United States",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		UY: {
 			name: "Uruguay",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		UZ: {
 			name: "Uzbekistan",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		VE: {
 			name: "Venezuela",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		VN: {
 			name: "Vietnam",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		VU: {
 			name: "Vanuatu",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		YE: {
 			name: "Yemen",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ZA: {
 			name: "South Africa",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ZM: {
 			name: "Zambia",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		},
 		ZW: {
 			name: "Zimbabwe",
-			color: set_color(this.name),
-			hover_color: set_hover_color(this.name),
-			description: set_description(this.name),
-			url: set_url(this.name),
-			image_url: set_image_url(this.name),
-			image_position: set_image_position(this.name),
-			hide: set_hide(this.name),
-			inactive: set_inactive(this.name),
-			zoomable: ""
 		}
 	},
 	locations: {},
@@ -2249,3 +864,29 @@ var simplemaps_worldmap_mapdata={
 		entries: []
 	}
 };
+
+for (let obj in simplemaps_worldmap_mapdata.state_specific) {
+	let map_country = simplemaps_worldmap_mapdata.state_specific[obj];
+	
+	if(data.find(({country}) => country === map_country.name) === undefined) {
+		console.log(map_country.name + " is not in the data set");
+	} else {
+		data.find(({country}) => country === map_country.name).onMap = true;
+	}
+
+	map_country.color = set_color(map_country.name);
+	map_country.hover_color = set_hover_color(map_country.name);
+	map_country.description = set_description(map_country.name);
+	map_country.url = set_url(map_country.name);
+	map_country.image_url = set_image_url(map_country.name);
+	map_country.image_position = set_image_position(map_country.name);
+	map_country.hide = set_hide(map_country.name);
+	map_country.inactive = set_inactive(map_country.name);
+	map_country.zoomable = set_zoomable(map_country.name);
+}
+
+// Print countries that are in the data set but not on the map
+var dataNotOnMap = data.filter(({onMap}) => onMap === false);
+for (let obj in dataNotOnMap) {
+	console.log(dataNotOnMap[obj].country + " is not on the map");
+}
