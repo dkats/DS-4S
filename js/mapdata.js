@@ -197,7 +197,7 @@ let description_exclude_focus = "Survey completed, but the organization was excl
 let description_exclude_ds_percentage = "Survey completed, but the organization was excluded due to fewer than 50% of the organization's members either having Down syndrome or having family members with Down syndrome";
 let description_exclude_both = "Survey completed, but the organization was excluded due to not having a holistic focus on the lives of people with Down syndrome and fewer than 50% of the organization's members either having Down syndrome or having family members with Down syndrome";
 let description_missing = "Survey not completed";
-let url_include = "";
+// let url_include = "";
 let url_exclude = "";
 let url_missing = "";
 let image_url_include = null;
@@ -283,7 +283,7 @@ function set_url(name) {
 	if(country != undefined) {
 		switch(country.include.toLowerCase()) {
 			case "yes":
-				return url_include;
+				return "country.html#" + country.country.toLowerCase();
 				break;
 			case "no":
 				// console.log(name + " has been excluded");
@@ -451,7 +451,7 @@ var simplemaps_worldmap_mapdata={
 	div: "map",
 	auto_load: "yes",
 	rotate: "0",
-	url_new_tab: "yes",
+	url_new_tab: "no",
 	images_directory: "default",
 	import_labels: "no",
 	fade_time: 0.1,

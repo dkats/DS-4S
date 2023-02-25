@@ -41,6 +41,27 @@ function roundTo(num, places) {
 	return Math.round(num * Math.pow(10,places)) / Math.pow(10,places);
 }
 
+// https://www.sitepoint.com/convert-numbers-to-ordinals-javascript/
+function ordinal_suffix(n) {
+	let ord = 'th';
+
+	if (n % 10 == 1 && n % 100 != 11) {
+		ord = 'st';
+	}
+	else if (n % 10 == 2 && n % 100 != 12) {
+		ord = 'nd';
+	}
+	else if (n % 10 == 3 && n % 100 != 13) {
+		ord = 'rd';
+	}
+
+	return ord;
+}
+
+function ordinal_super(n) {
+	return n + "<sup>" + ordinal_suffix(n) + "</sup>";
+}
+
 var data_scores = [
 	{country: 'Albania', all_domain_score: '-2.567181', all_domain_rank: '23', community_score: '-1.756504', community_rank: '40', edu_score: '1.596031', edu_rank: '20', health_score: '-4.097375', health_rank: '33', indep_score: '0.9746428', indep_rank: '21', policy_score: '1.188768', policy_rank: '22'},
 	{country: 'Argentina', all_domain_score: '6.166677', all_domain_rank: '17', community_score: '1.204246', community_rank: '18', edu_score: '1.470649', edu_rank: '21', health_score: '1.66459', health_rank: '21', indep_score: '1.17078', indep_rank: '19', policy_score: '1.266054', policy_rank: '19'},
@@ -189,31 +210,47 @@ for (let obj in data_scores) {
 
 function loadData() {
 	let country_name = country_select.value;
-	let data = data_scores.find(({country}) => country.toLowerCase() === country_name.toLowerCase());
-	rank_overall.innerHTML = data['all_domain_rank'];
-	rank_overall_outof.innerHTML = "/" + max_rank_overall;
-	score_overall.innerHTML = roundTo(data['all_domain_score'],score_rounding);
-	score_overall_range.innerHTML = "(" + roundTo(min_score_overall,score_rounding) + "&ndash;" + roundTo(max_score_overall,score_rounding) + ")"
-	rank_community.innerHTML = data['community_rank'];
-	rank_community_outof.innerHTML = "/" + max_rank_community;
-	score_community.innerHTML = roundTo(data['community_score'],score_rounding);
-	score_community_range.innerHTML = "(" + roundTo(min_score_community,score_rounding) + "&ndash;" + roundTo(max_score_community,score_rounding) + ")"
-	rank_education.innerHTML = data['edu_rank'];
-	rank_education_outof.innerHTML = "/" + max_rank_education;
-	score_education.innerHTML = roundTo(data['edu_score'],score_rounding);
-	score_education_range.innerHTML = "(" + roundTo(min_score_education,score_rounding) + "&ndash;" + roundTo(max_score_education,score_rounding) + ")"
-	rank_health.innerHTML = data['health_rank'];
-	rank_health_outof.innerHTML = "/" + max_rank_health;
-	score_health.innerHTML = roundTo(data['health_score'],score_rounding);
-	score_health_range.innerHTML = "(" + roundTo(min_score_health,score_rounding) + "&ndash;" + roundTo(max_score_health,score_rounding) + ")"
-	rank_independence.innerHTML = data['indep_rank'];
-	rank_independence_outof.innerHTML = "/" + max_rank_independence;
-	score_independence.innerHTML = roundTo(data['indep_score'],score_rounding);
-	score_independence_range.innerHTML = "(" + roundTo(min_score_independence,score_rounding) + "&ndash;" + roundTo(max_score_independence,score_rounding) + ")"
-	rank_policy.innerHTML = data['policy_rank'];
-	rank_policy_outof.innerHTML = "/" + max_rank_policy;
-	score_policy.innerHTML = roundTo(data['policy_score'],score_rounding);
-	score_policy_range.innerHTML = "(" + roundTo(min_score_policy,score_rounding) + "&ndash;" + roundTo(max_score_policy,score_rounding) + ")"
+	if(country_name.length > 0) {
+		window.location.hash = country_name.toLowerCase();
+	}
+
+	let url_country = window.location.hash.replaceAll("%20"," ");
+	if(url_country.length > 0) {
+		url_country = url_country.substring(1);
+	}
+
+	let data = data_scores.find(({country}) => country.toLowerCase() === url_country.toLowerCase());
+	if(data != undefined) {
+		if(country_name.length == 0) {
+			country_select.value = data.country;
+		}
+		rank_overall.innerHTML = ordinal_super(data['all_domain_rank']);
+		rank_overall_outof.innerHTML = "/" + max_rank_overall;
+		score_overall.innerHTML = roundTo(data['all_domain_score'],score_rounding);
+		score_overall_range.innerHTML = "(" + roundTo(min_score_overall,score_rounding) + "&ndash;" + roundTo(max_score_overall,score_rounding) + ")"
+		rank_community.innerHTML = ordinal_super(data['community_rank']);
+		rank_community_outof.innerHTML = "/" + max_rank_community;
+		score_community.innerHTML = roundTo(data['community_score'],score_rounding);
+		score_community_range.innerHTML = "(" + roundTo(min_score_community,score_rounding) + "&ndash;" + roundTo(max_score_community,score_rounding) + ")"
+		rank_education.innerHTML = ordinal_super(data['edu_rank']);
+		rank_education_outof.innerHTML = "/" + max_rank_education;
+		score_education.innerHTML = roundTo(data['edu_score'],score_rounding);
+		score_education_range.innerHTML = "(" + roundTo(min_score_education,score_rounding) + "&ndash;" + roundTo(max_score_education,score_rounding) + ")"
+		rank_health.innerHTML = ordinal_super(data['health_rank']);
+		rank_health_outof.innerHTML = "/" + max_rank_health;
+		score_health.innerHTML = roundTo(data['health_score'],score_rounding);
+		score_health_range.innerHTML = "(" + roundTo(min_score_health,score_rounding) + "&ndash;" + roundTo(max_score_health,score_rounding) + ")"
+		rank_independence.innerHTML = ordinal_super(data['indep_rank']);
+		rank_independence_outof.innerHTML = "/" + max_rank_independence;
+		score_independence.innerHTML = roundTo(data['indep_score'],score_rounding);
+		score_independence_range.innerHTML = "(" + roundTo(min_score_independence,score_rounding) + "&ndash;" + roundTo(max_score_independence,score_rounding) + ")"
+		rank_policy.innerHTML = ordinal_super(data['policy_rank']);
+		rank_policy_outof.innerHTML = "/" + max_rank_policy;
+		score_policy.innerHTML = roundTo(data['policy_score'],score_rounding);
+		score_policy_range.innerHTML = "(" + roundTo(min_score_policy,score_rounding) + "&ndash;" + roundTo(max_score_policy,score_rounding) + ")"
+	} else {
+		console.log(url_country + " not found");
+	}
 
 	if(score_overall.innerHTML == "NaN") {
 		rank_overall.innerHTML = rank_none;
@@ -252,3 +289,4 @@ function loadData() {
 		score_policy_range.innerHTML = "";
 	}
 }
+loadData();
