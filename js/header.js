@@ -8,7 +8,7 @@ function header(level = 0) {
 	document.write('<header>');
 	document.write('<ul class="menu">');
 	document.write('	<li class="homeclick" onclick="window.open(\'' + dir + 'index.html\',\'_self\')" id="header_home">Map</li>');
-	document.write('	<li onclick="window.open(\'' + dir + 'data.html\',\'_self\')" id="header_data">Data</li>');
+	document.write('	<li onclick="window.open(\'' + dir + 'country.html\',\'_self\')" id="header_country">Country data</li>');
 	document.write('	<li onclick="window.open(\'' + dir + 'citation.html\',\'_self\')" id="header_citation">Publication and Citation Information</li>');
 	document.write('</ul>');
 	document.write('</header>');

@@ -1,0 +1,50 @@
+option:first-child {
+	display: none;
+}
+
+table {
+	font-size: 1.1em;
+}
+
+th, td {
+	padding: 5pt 10pt;
+}
+
+.score_label {
+	text-align: right;
+	font-weight: bold;
+}
+
+.score_rank {
+
+}
+
+.rank_outof {
+	color: #b3b3b3;
+	font-size: 0.7em;
+}
+
+.rank_outof:before {
+	content: " ";
+}
+
+.score_value {
+
+}
+
+#row_overall {
+	border: 1px solid transparent;
+	border-color: rgba(0, 0, 0, 0.1) transparent rgba(0, 0, 0, 0.1) transparent;
+}
+
+
+
+@media print {
+	
+}
+
+
+
+@media only screen and (max-width: 600px) {
+	
+}

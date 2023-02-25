@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DS-4S</title>
+<link rel="stylesheet" type="text/css" href="css/ds-4s.css">
+<link rel="stylesheet" type="text/css" href="css/country.css">
+<meta name="author" content="Daniel J. Kats">
+<meta name="keywords" content="">
+<script type="text/javascript" src="js/footer.js"></script>
+<script type="text/javascript" src="js/header.js"></script>
+</head>
+<body>
+<script>header();</script>
+<script type="text/javascript">document.getElementById("header_country").className = "active";</script>
+<article>
+
+	<h1>Down Syndrome Societal Services and Supports Survey</h1>
+
+	<div id="country" class="center"><select id="country_select" onchange="loadData();">
+		<option></option></select></div><br />
+
+	<div class="center">
+	<table>
+		<tr><th></th><th>Rank</th><th>Score</th></tr>
+		<tr id="row_overall"><td class="score_label">Overall</td><td><span id="rank_overall" class="score_rank"></span><span id="rank_overall_outof" class="rank_outof"></span></td><td id="score_overall" class="score_value"></td></tr>
+		<tr><td class="score_label">Community Inclusion</td><td><span id="rank_community" class="score_rank"></span><span id="rank_community_outof" class="rank_outof"></span></td><td id="score_community" class="score_value"></td></tr>
+		<tr><td class="score_label">Education</td><td><span id="rank_education" class="score_rank"></span><span id="rank_education_outof" class="rank_outof"></span></td><td id="score_education" class="score_value"></td></tr>
+		<tr><td class="score_label">Health</td><td><span id="rank_health" class="score_rank"></span><span id="rank_health_outof" class="rank_outof"></span></td><td id="score_health" class="score_value"></td></tr>
+		<tr><td class="score_label">Independence</td><td><span id="rank_independence" class="score_rank"></span><span id="rank_independence_outof" class="rank_outof"></span></td><td id="score_independence" class="score_value"></td></tr>
+		<tr><td class="score_label">Policy</td><td><span id="rank_policy" class="score_rank"></span><span id="rank_policy_outof" class="rank_outof"></span></td><td id="score_policy" class="score_value"></td></tr>
+	</table>
+	</div>
+
+	<script type="text/javascript" src="js/country.js"></script>
+
+</article>
+</body>
+</html>
