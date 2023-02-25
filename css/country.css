@@ -15,10 +15,6 @@ th, td {
 	font-weight: bold;
 }
 
-.score_rank {
-
-}
-
 .rank_outof {
 	color: #b3b3b3;
 	font-size: 0.7em;
@@ -28,8 +24,17 @@ th, td {
 	content: " ";
 }
 
-.score_value {
+.score_col {
+	padding-left: 20pt;
+}
 
+.score_range {
+	color: #b3b3b3;
+	font-size: 0.7em;
+}
+
+.score_range:before {
+	content: " ";
 }
 
 #row_overall {

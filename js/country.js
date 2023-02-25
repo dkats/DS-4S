@@ -17,11 +17,15 @@ let score_education = document.getElementById("score_education");
 let score_health = document.getElementById("score_health");
 let score_independence = document.getElementById("score_independence");
 let score_policy = document.getElementById("score_policy");
+let score_overall_range = document.getElementById("score_overall_range");
+let score_community_range = document.getElementById("score_community_range");
+let score_education_range = document.getElementById("score_education_range");
+let score_health_range = document.getElementById("score_health_range");
+let score_independence_range = document.getElementById("score_independence_range");
+let score_policy_range = document.getElementById("score_policy_range");
 let score_rounding = 2;
 let score_none = "&ndash;";
 let rank_none = "&ndash;";
-
-score_rounding = Math.pow(10,score_rounding);
 
 // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
 function toTitleCase(str) {
@@ -31,6 +35,10 @@ function toTitleCase(str) {
 			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 		}
 	);
+}
+
+function roundTo(num, places) {
+	return Math.round(num * Math.pow(10,places)) / Math.pow(10,places);
 }
 
 var data_scores = [
@@ -91,6 +99,18 @@ let max_rank_education = 0;
 let max_rank_health = 0;
 let max_rank_independence = 0;
 let max_rank_policy = 0;
+let max_score_overall = 0;
+let max_score_community = 0;
+let max_score_education = 0;
+let max_score_health = 0;
+let max_score_independence = 0;
+let max_score_policy = 0;
+let min_score_overall = 0;
+let min_score_community = 0;
+let min_score_education = 0;
+let min_score_health = 0;
+let min_score_independence = 0;
+let min_score_policy = 0;
 for (let obj in data_scores) {
 	let val = data_scores[obj];
 	val['all_domain_score'] = Number.parseFloat(val['all_domain_score']);
@@ -123,6 +143,42 @@ for (let obj in data_scores) {
 	if(!isNaN(val['policy_score'])) {
 		max_rank_policy = max_rank_policy + 1;
 	}
+	if(max_score_overall < val['all_domain_score']) {
+		max_score_overall = val['all_domain_score'];
+	}
+	if(max_score_community < val['community_score']) {
+		max_score_community = val['community_score'];
+	}
+	if(max_score_education < val['edu_score']) {
+		max_score_education = val['edu_score'];
+	}
+	if(max_score_health < val['health_score']) {
+		max_score_health = val['health_score'];
+	}
+	if(max_score_independence < val['indep_score']) {
+		max_score_independence = val['indep_score'];
+	}
+	if(max_score_policy < val['policy_score']) {
+		max_score_policy = val['policy_score'];
+	}
+	if(min_score_overall > val['all_domain_score']) {
+		min_score_overall = val['all_domain_score'];
+	}
+	if(min_score_community > val['community_score']) {
+		min_score_community = val['community_score'];
+	}
+	if(min_score_education > val['edu_score']) {
+		min_score_education = val['edu_score'];
+	}
+	if(min_score_health > val['health_score']) {
+		min_score_health = val['health_score'];
+	}
+	if(min_score_independence > val['indep_score']) {
+		min_score_independence = val['indep_score'];
+	}
+	if(min_score_policy > val['policy_score']) {
+		min_score_policy = val['policy_score'];
+	}
 
 	// Add country to drop down options list
 	let option = document.createElement("option");
@@ -136,51 +192,63 @@ function loadData() {
 	let data = data_scores.find(({country}) => country.toLowerCase() === country_name.toLowerCase());
 	rank_overall.innerHTML = data['all_domain_rank'];
 	rank_overall_outof.innerHTML = "/" + max_rank_overall;
-	score_overall.innerHTML = Math.round(data['all_domain_score']*score_rounding)/score_rounding;
+	score_overall.innerHTML = roundTo(data['all_domain_score'],score_rounding);
+	score_overall_range.innerHTML = "(" + roundTo(min_score_overall,score_rounding) + "&ndash;" + roundTo(max_score_overall,score_rounding) + ")"
 	rank_community.innerHTML = data['community_rank'];
 	rank_community_outof.innerHTML = "/" + max_rank_community;
-	score_community.innerHTML = Math.round(data['community_score']*score_rounding)/score_rounding;
+	score_community.innerHTML = roundTo(data['community_score'],score_rounding);
+	score_community_range.innerHTML = "(" + roundTo(min_score_community,score_rounding) + "&ndash;" + roundTo(max_score_community,score_rounding) + ")"
 	rank_education.innerHTML = data['edu_rank'];
 	rank_education_outof.innerHTML = "/" + max_rank_education;
-	score_education.innerHTML = Math.round(data['edu_score']*score_rounding)/score_rounding;
+	score_education.innerHTML = roundTo(data['edu_score'],score_rounding);
+	score_education_range.innerHTML = "(" + roundTo(min_score_education,score_rounding) + "&ndash;" + roundTo(max_score_education,score_rounding) + ")"
 	rank_health.innerHTML = data['health_rank'];
 	rank_health_outof.innerHTML = "/" + max_rank_health;
-	score_health.innerHTML = Math.round(data['health_score']*score_rounding)/score_rounding;
+	score_health.innerHTML = roundTo(data['health_score'],score_rounding);
+	score_health_range.innerHTML = "(" + roundTo(min_score_health,score_rounding) + "&ndash;" + roundTo(max_score_health,score_rounding) + ")"
 	rank_independence.innerHTML = data['indep_rank'];
 	rank_independence_outof.innerHTML = "/" + max_rank_independence;
-	score_independence.innerHTML = Math.round(data['indep_score']*score_rounding)/score_rounding;
+	score_independence.innerHTML = roundTo(data['indep_score'],score_rounding);
+	score_independence_range.innerHTML = "(" + roundTo(min_score_independence,score_rounding) + "&ndash;" + roundTo(max_score_independence,score_rounding) + ")"
 	rank_policy.innerHTML = data['policy_rank'];
 	rank_policy_outof.innerHTML = "/" + max_rank_policy;
-	score_policy.innerHTML = Math.round(data['policy_score']*score_rounding)/score_rounding;
+	score_policy.innerHTML = roundTo(data['policy_score'],score_rounding);
+	score_policy_range.innerHTML = "(" + roundTo(min_score_policy,score_rounding) + "&ndash;" + roundTo(max_score_policy,score_rounding) + ")"
 
 	if(score_overall.innerHTML == "NaN") {
-		score_overall.innerHTML = score_none;
 		rank_overall.innerHTML = rank_none;
 		rank_overall_outof.innerHTML = "";
+		score_overall.innerHTML = score_none;
+		score_overall_range.innerHTML = "";
 	}
 	if(score_community.innerHTML == "NaN") {
-		score_community.innerHTML = score_none;
 		rank_community.innerHTML = rank_none;
 		rank_community_outof.innerHTML = "";
+		score_community.innerHTML = score_none;
+		score_community_range.innerHTML = "";
 	}
 	if(score_education.innerHTML == "NaN") {
-		score_education.innerHTML = score_none;
 		rank_education.innerHTML = rank_none;
 		rank_education_outof.innerHTML = "";
+		score_education.innerHTML = score_none;
+		score_education_range.innerHTML = "";
 	}
 	if(score_health.innerHTML == "NaN") {
-		score_health.innerHTML = score_none;
 		rank_health.innerHTML = rank_none;
 		rank_health_outof.innerHTML = "";
+		score_health.innerHTML = score_none;
+		score_health_range.innerHTML = "";
 	}
 	if(score_independence.innerHTML == "NaN") {
-		score_independence.innerHTML = score_none;
 		rank_independence.innerHTML = rank_none;
 		rank_independence_outof.innerHTML = "";
+		score_independence.innerHTML = score_none;
+		score_independence_range.innerHTML = "";
 	}
 	if(score_policy.innerHTML == "NaN") {
-		score_policy.innerHTML = score_none;
 		rank_policy.innerHTML = rank_none;
 		rank_policy_outof.innerHTML = "";
+		score_policy.innerHTML = score_none;
+		score_policy_range.innerHTML = "";
 	}
 }
