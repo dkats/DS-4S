@@ -84,7 +84,7 @@ h3 {
 	display: block;
 	font-size: 1.25em;
 	margin-top: 1em;
-	margin-bottom: 1em;
+	margin-bottom: 0.8em;
 	margin-left: 0;
 	margin-right: 0;
 	font-weight: bold;
@@ -184,7 +184,7 @@ article {
 	padding: 0px 28px;
 	top: 46px;
 	bottom: 32px;
-	width: 100%;
+	width: calc(100% - 28px);
 	overflow: auto;
 	scroll-behavior: smooth;
 }
@@ -256,6 +256,16 @@ select {
 	padding: 8px 16px;
 	border: 1px solid transparent;
 	cursor: pointer;
+}
+
+dt {
+	font-weight: bold;
+	padding-top: 6pt;
+	padding-left: 1em;
+}
+
+dt:first-child {
+	padding-top: 0pt;
 }
 
 
