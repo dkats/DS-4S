@@ -8,8 +8,6 @@
 <meta name="keywords" content="">
 <script type="text/javascript" src="js/footer.js"></script>
 <script type="text/javascript" src="js/header.js"></script>
-<script type="text/javascript" src="js/mapdata.js"></script>		
-<script type="text/javascript" src="js/worldmap.js"></script>
 </head>
 <body>
 <script>header();</script>
@@ -19,7 +17,7 @@
 	<h1>Down Syndrome Societal Services and Supports Survey</h1>
 
 	<div id="category"><span id="category_label">Ranking category: </span>
-		<select>
+		<select id="category_select" onchange="repaint();">
 			<option value="Overall">*Overall*</option>
 			<option value="Community inclusion">Community inclusion</option>
 			<option value="Education">Education</option>
@@ -29,6 +27,9 @@
 		</select>
 	</div>
 	<div id="map"></div>
+	<script type="text/javascript" src="js/scores.js"></script>
+	<script type="text/javascript" src="js/mapdata.js"></script>
+	<script type="text/javascript" src="js/worldmap.js"></script>
 	<script type="text/javascript" src="js/mapedit.js"></script>
 
 </article>

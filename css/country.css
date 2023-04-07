@@ -40,6 +40,27 @@ th, td {
 #row_overall {
 	border: 1px solid transparent;
 	border-color: rgba(0, 0, 0, 0.1) transparent rgba(0, 0, 0, 0.1) transparent;
+	color: #4d4dff;
+}
+
+#row_community {
+	color: #dc143c;
+}
+
+#row_education {
+	color: #ff8c00;
+}
+
+#row_health {
+	color: #36013f;
+}
+
+#row_independence {
+	color: #228b22;
+}
+
+#row_policy {
+	color: #5c4033;
 }
 
 
