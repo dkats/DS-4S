@@ -49,6 +49,31 @@ article {
 	scale: 150%;
 }
 
+.description_overall {
+	color: #4d4dff;
+}
+
+.description_community {
+	color: #dc143c;
+}
+
+.description_edu {
+	color: #ff8c00;
+}
+
+.description_health {
+	color: #36013f;
+}
+
+.description_indep {
+	color: #228b22;
+}
+
+.description_policy {
+	color: #5c4033;
+}
+
+
 
 
 @media print {
