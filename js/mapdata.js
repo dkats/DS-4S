@@ -241,27 +241,27 @@ function set_description(name) {
 
 				let description = "";
 				description += (category_select == "Overall" ? "<strong>" : "");
-				description += "<span class='description_overall'><span class='description_overall_label'>Overall:</span> " + (isNaN(country.all_domain_score) ? "&ndash;" : roundTo(country.all_domain_score,2) + " (" + ordinal_super(country.all_domain_rank) + ")") + "</span>";
+				description += "<span class='description_overall'><span class='description_overall_label'>Overall:</span> " + (isNaN(country.all_domain_score) ? "&ndash;" : roundTo(country.all_domain_score,2)) + "</span>";
 				description += (category_select == "Overall" ? "</strong>" : "");
 				description += "<br />"
 				description += (category_select == "Community inclusion" ? "<strong>" : "");
-				description += "<span class='description_community'><span class='description_community_label'>Community inclusion:</span> " + (isNaN(country.community_score) ? "&ndash;" : roundTo(country.community_score,2) + " (" + ordinal_super(country.community_rank) + ")") + "</span>";
+				description += "<span class='description_community'><span class='description_community_label'>Community inclusion:</span> " + (isNaN(country.community_score) ? "&ndash;" : roundTo(country.community_score,2)) + "</span>";
 				description += (category_select == "Community inclusion" ? "</strong>" : "");
 				description += "<br />"
 				description += (category_select == "Education" ? "<strong>" : "");
-				description += "<span class='description_edu'><span class='description_edu_label'>Education:</span> " + (isNaN(country.edu_score) ? "&ndash;" : roundTo(country.edu_score,2) + " (" + ordinal_super(country.edu_rank) + ")") + "</span>";
+				description += "<span class='description_edu'><span class='description_edu_label'>Education:</span> " + (isNaN(country.edu_score) ? "&ndash;" : roundTo(country.edu_score,2)) + "</span>";
 				description += (category_select == "Education" ? "</strong>" : "");
 				description += "<br />"
 				description += (category_select == "Health" ? "<strong>" : "");
-				description += "<span class='description_health'><span class='description_health_label'>Health:</span> " + (isNaN(country.health_score) ? "&ndash;" : roundTo(country.health_score,2) + " (" + ordinal_super(country.health_rank) + ")") + "</span>";
+				description += "<span class='description_health'><span class='description_health_label'>Health:</span> " + (isNaN(country.health_score) ? "&ndash;" : roundTo(country.health_score,2)) + "</span>";
 				description += (category_select == "Health" ? "</strong>" : "");
 				description += "<br />"
 				description += (category_select == "Independence" ? "<strong>" : "");
-				description += "<span class='description_indep'><span class='description_indep_label'>Independence:</span> " + (isNaN(country.indep_score) ? "&ndash;" : roundTo(country.indep_score,2) + " (" + ordinal_super(country.indep_rank) + ")") + "</span>";
+				description += "<span class='description_indep'><span class='description_indep_label'>Independence:</span> " + (isNaN(country.indep_score) ? "&ndash;" : roundTo(country.indep_score,2)) + "</span>";
 				description += (category_select == "Independence" ? "</strong>" : "");
 				description += "<br />"
 				description += (category_select == "Policy" ? "<strong>" : "");
-				description += "<span class='description_policy'><span class='description_policy_label'>Policy:</span> " + (isNaN(country.policy_score) ? "&ndash;" : roundTo(country.policy_score,2) + " (" + ordinal_super(country.policy_rank) + ")") + "</span>";
+				description += "<span class='description_policy'><span class='description_policy_label'>Policy:</span> " + (isNaN(country.policy_score) ? "&ndash;" : roundTo(country.policy_score,2)) + "</span>";
 				description += (category_select == "Policy" ? "</strong>" : "");
 				return description;
 				break;
