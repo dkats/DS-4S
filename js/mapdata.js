@@ -117,6 +117,74 @@ function getGradientColor(start_color, end_color, decimal) {
 	return '#' + diff_red + diff_green + diff_blue;
 };
 
+// https://stackoverflow.com/questions/13760299/dynamic-svg-linear-gradient-when-using-javascript
+function setLegendGradient(top_color, bottom_color) {
+	// Change first element of legend to a gradient fill
+	let legend_gradient_svg = document.getElementById("map_legend").childNodes[0].childNodes[0].childNodes[0];
+
+	// Store the SVG namespace for easy reuse.
+	let svgns = 'http://www.w3.org/2000/svg';
+	let defs = document.createElementNS(svgns, 'defs');
+	let gradient = document.createElementNS(svgns, 'linearGradient');
+	let rect = document.createElementNS(svgns, 'rect');
+
+	// Store an array of stop information for the <linearGradient>
+	let stops = [
+	{
+		"color": top_color,
+		"offset": "0%"
+	},{
+		"color": bottom_color,
+		"offset": "100%"
+	}
+	];
+
+	// Parses an array of stop information and appends <stop> elements to the <linearGradient>
+	for (let i = 0, length = stops.length; i < length; i++) {
+
+		// Create a <stop> element and set its offset based on the position of the for loop.
+		let stop = document.createElementNS(svgns, 'stop');
+		stop.setAttribute('offset', stops[i].offset);
+		stop.setAttribute('stop-color', stops[i].color);
+
+		// Add the stop to the <lineargradient> element.
+		gradient.appendChild(stop);
+
+	}
+
+	// Apply the <lineargradient> to <defs>
+	gradient.id = 'Gradient';
+	gradient.setAttribute('x1', '0');
+	gradient.setAttribute('x2', '0');
+	gradient.setAttribute('y1', '0');
+	gradient.setAttribute('y2', '1');
+	defs.appendChild(gradient);
+
+	// Setup the <rect> element.
+	rect.setAttribute('fill', 'url(#Gradient)');
+	rect.setAttribute('width', '80');
+	rect.setAttribute('height', '240');
+	rect.setAttribute('x', '10');
+	rect.setAttribute('y', '-3.5em');
+	rect.setAttribute('stroke-width', '10');
+	rect.setAttribute('stroke', 'white');
+
+	// Assign an id, classname, width and height
+	legend_gradient_svg.setAttribute('width', '100%');
+	legend_gradient_svg.setAttribute('height', '100%')
+	legend_gradient_svg.setAttribute('version', '1.1');
+	legend_gradient_svg.setAttribute('xmlns', svgns);
+	legend_gradient_svg.style.height = "3em";
+	legend_gradient_svg.style.verticalAlign = "-0.75em";
+
+	// Add the <defs> and <rect> elements to <svg>
+	legend_gradient_svg.innerHTML = "";
+	legend_gradient_svg.appendChild(defs);
+	legend_gradient_svg.appendChild(rect);
+
+	document.getElementById("map_legend").childNodes[0].childNodes[0].style.marginTop = "-0.1em";
+}
+
 let color_include = "#4d4dff";
 let color_exclude = "#e6e600";
 let color_missing = "#b3b3b3";
@@ -126,6 +194,8 @@ let color_education = "#ff8c00";
 let color_health = "#36013f";
 let color_independence = "#228b22";
 let color_policy = "#5c4033";
+let color_gradient_min = 0.4;
+let color_not_available = 0.2;
 let hover_color_include = "#8080ff";
 let hover_color_exclude = "#ffff1a";
 let hover_color_missing = "#d9d9d9";
@@ -166,39 +236,39 @@ function set_color(name) {
 				switch(category_select) {
 					case "Overall":
 						if(isNaN(country.all_domain_score)) {
-							return getGradientColor("#ffffff", color_overall, 0.1);
+							return getGradientColor("#ffffff", color_overall, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_overall, 0.3+0.7*(country.all_domain_score-min_score_overall)/(max_score_overall-min_score_overall));
+						return getGradientColor("#ffffff", color_overall, color_gradient_min+(1-color_gradient_min)*(country.all_domain_score-min_score_overall)/(max_score_overall-min_score_overall));
 						break;
 					case "Community inclusion":
 						if(isNaN(country.community_score)) {
-							return getGradientColor("#ffffff", color_community_inclusion, 0.1);
+							return getGradientColor("#ffffff", color_community_inclusion, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_community_inclusion, 0.3+0.7*(country.community_score-min_score_community)/(max_score_community-min_score_community));
+						return getGradientColor("#ffffff", color_community_inclusion, color_gradient_min+(1-color_gradient_min)*(country.community_score-min_score_community)/(max_score_community-min_score_community));
 						break;
 					case "Education":
 						if(isNaN(country.edu_score)) {
-							return getGradientColor("#ffffff", color_education, 0.1);
+							return getGradientColor("#ffffff", color_education, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_education, 0.3+0.7*(country.edu_score-min_score_education)/(max_score_education-min_score_education));
+						return getGradientColor("#ffffff", color_education, color_gradient_min+(1-color_gradient_min)*(country.edu_score-min_score_education)/(max_score_education-min_score_education));
 						break;
 					case "Health":
 						if(isNaN(country.health_score)) {
-							return getGradientColor("#ffffff", color_health, 0.1);
+							return getGradientColor("#ffffff", color_health, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_health, 0.3+0.7*(country.health_score-min_score_health)/(max_score_health-min_score_health));
+						return getGradientColor("#ffffff", color_health, color_gradient_min+(1-color_gradient_min)*(country.health_score-min_score_health)/(max_score_health-min_score_health));
 						break;
 					case "Independence":
 						if(isNaN(country.indep_score)) {
-							return getGradientColor("#ffffff", color_independence, 0.1);
+							return getGradientColor("#ffffff", color_independence, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_independence, 0.3+0.7*(country.indep_score-min_score_independence)/(max_score_independence-min_score_independence));
+						return getGradientColor("#ffffff", color_independence, color_gradient_min+(1-color_gradient_min)*(country.indep_score-min_score_independence)/(max_score_independence-min_score_independence));
 						break;
 					case "Policy":
 						if(isNaN(country.policy_score)) {
-							return getGradientColor("#ffffff", color_policy, 0.1);
+							return getGradientColor("#ffffff", color_policy, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_policy, 0.3+0.7*(country.policy_score-min_score_policy)/(max_score_policy-min_score_policy));
+						return getGradientColor("#ffffff", color_policy, color_gradient_min+(1-color_gradient_min)*(country.policy_score-min_score_policy)/(max_score_policy-min_score_policy));
 						break;
 				}
 				return color_include;
@@ -1154,7 +1224,8 @@ var simplemaps_worldmap_mapdata={
 				ids: ""
 			},
 			{
-				name: "Included, but " + category_select.toLowerCase() + " score not available",
+				// name: "Included, but " + category_select.toLowerCase() + " score not available",
+				name: "Included, but score not available",
 				color: getGradientColor("#ffffff", color_overall, 0.1),
 				type: "",
 				shape: "square",
@@ -1241,34 +1312,50 @@ function repaint() {
 		country_loop(simplemaps_worldmap_mapdata.locations[obj]);
 	}
 
-	simplemaps_worldmap_mapdata.legend.entries[0].color = color_include;
-	simplemaps_worldmap_mapdata.legend.entries[1].name = "Included, but " + category_select.toLowerCase() + " score not available";
+	// simplemaps_worldmap_mapdata.legend.entries[1].name = "Included, but " + category_select.toLowerCase() + " score not available";
+	simplemaps_worldmap_mapdata.legend.entries[1].name = "Included, but score not available";
 	switch(category_select) {
 		case "Overall":
-			simplemaps_worldmap_mapdata.legend.entries[0].color = color_overall;
-			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_overall, 0.1);
+			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_overall, color_not_available);
 			break;
 		case "Community inclusion":
-			simplemaps_worldmap_mapdata.legend.entries[0].color = color_community_inclusion;
-			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_community_inclusion, 0.1);
+			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_community_inclusion, color_not_available);
 			break;
 		case "Education":
-			simplemaps_worldmap_mapdata.legend.entries[0].color = color_education;
-			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_education, 0.1);
+			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_education, color_not_available);
 			break;
 		case "Health":
-			simplemaps_worldmap_mapdata.legend.entries[0].color = color_health;
-			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_health, 0.1);
+			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_health, color_not_available);
 			break;
 		case "Independence":
-			simplemaps_worldmap_mapdata.legend.entries[0].color = color_independence;
-			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_independence, 0.1);
+			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_independence, color_not_available);
 			break;
 		case "Policy":
-			simplemaps_worldmap_mapdata.legend.entries[0].color = color_policy;
-			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_policy, 0.1);
+			simplemaps_worldmap_mapdata.legend.entries[1].color = getGradientColor("#ffffff", color_policy, color_not_available);
 			break;
 	}
 
 	simplemaps_worldmap.refresh();
+
+	// Set legend gradient
+	switch(category_select) {
+		case "Overall":
+			setLegendGradient(color_overall, getGradientColor("#ffffff", color_overall, color_gradient_min));
+			break;
+		case "Community inclusion":
+			setLegendGradient(color_community_inclusion, getGradientColor("#ffffff", color_community_inclusion, color_gradient_min));
+			break;
+		case "Education":
+			setLegendGradient(color_education, getGradientColor("#ffffff", color_education, color_gradient_min));
+			break;
+		case "Health":
+			setLegendGradient(color_health, getGradientColor("#ffffff", color_health, color_gradient_min));
+			break;
+		case "Independence":
+			setLegendGradient(color_independence, getGradientColor("#ffffff", color_independence, color_gradient_min));
+			break;
+		case "Policy":
+			setLegendGradient(color_policy, getGradientColor("#ffffff", color_policy, color_gradient_min));
+			break;
+	}
 }
