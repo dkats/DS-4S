@@ -2,8 +2,8 @@ article {
 	margin: 0px;
 	padding: 0px 28px;
 /*	height: 100%;*/
-	max-width: calc(100% - 2*28px);
-	max-height: calc(100% - (2*16px + 8pt));
+/*	max-width: calc(100% - 2*28px);*/
+	max-height: 90%;
 	overflow: auto;
 }
 
@@ -13,6 +13,7 @@ article {
 	font-weight: bold;
 	border: 1px solid transparent;
 	border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+	padding: 6pt 0;
 }
 
 #category_label {
