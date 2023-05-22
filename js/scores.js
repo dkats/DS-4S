@@ -9,7 +9,7 @@ function toTitleCase(str) {
 }
 
 function roundTo(num, places) {
-	return Math.round(num * Math.pow(10,places)) / Math.pow(10,places);
+	return (Math.round(num * Math.pow(10,places)) / Math.pow(10,places)).toFixed(places);
 }
 
 // https://www.sitepoint.com/convert-numbers-to-ordinals-javascript/
