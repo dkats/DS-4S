@@ -26,6 +26,7 @@ let score_policy_range = document.getElementById("score_policy_range");
 let score_rounding = 2;
 let score_none = "&ndash;";
 let rank_none = "&ndash;";
+let responses_el = document.getElementById("responses");
 
 for (let obj in data_scores) {
 	let val = data_scores[obj];
@@ -48,6 +49,7 @@ function loadData() {
 		url_country = url_country.substring(1);
 	}
 
+	// LOAD SCORE DATA
 	let data = data_scores.find(({country}) => country.toLowerCase() === url_country.toLowerCase());
 	if(data != undefined) {
 		if(country_name.length == 0) {
@@ -116,6 +118,27 @@ function loadData() {
 		rank_policy_outof.innerHTML = "";
 		score_policy.innerHTML = score_none;
 		score_policy_range.innerHTML = "";
+	}
+
+	// LOAD RESPONSE DATA
+	data = data_responses.find(({country}) => country.toLowerCase() === url_country.toLowerCase());
+
+	responses_el.innerHTML = "";
+	if(data != undefined) {
+		if(country_name.length == 0) {
+			country_select.value = data.country;
+		}
+		let out = "";
+		for(let i in data_dictionary) {
+			out += "<div class='question_wrapper " + data_dictionary[i].variable.split("_")[0] + "'>";
+			out += "<p class='question'>" + data_dictionary[i].question + "</p>";
+			out += (data_dictionary[i].scale === "null" ? "null" : "<p class='scale'>(Scale:&nbsp;&nbsp;&nbsp;&nbsp;" + data_dictionary[i].scale.replaceAll(/[0-9],/g, '').replaceAll('<br>', '').replaceAll(" | ","&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;") + ")</p>");
+			out += "<p class='response'>" + (data[data_dictionary[i].variable] === "null" ? "<span class='response_unanswered'>Not answered</span>" : data[data_dictionary[i].variable]) + "</p>";
+			out += "</div>";
+		}
+		responses_el.innerHTML = out;
+	} else {
+		console.log(url_country + " not found");
 	}
 }
 loadData();

@@ -63,6 +63,55 @@ th, td {
 	color: #5c4033;
 }
 
+#responses {
+	margin-top: 2em;
+}
+
+.question_wrapper {	
+	margin: 0 4em;
+}
+
+.comm {
+	border-left: 6px solid #dc143c;
+}
+
+.edu {
+	border-left: 6px solid #ff8c00;
+}
+
+.policy {
+	border-left: 6px solid #5c4033;
+}
+
+.health {
+	border-left: 6px solid #36013f;
+}
+
+.indep {
+	border-left: 6px solid #228b22;
+}
+
+.question {
+	margin: 0 0 0 0.5em;
+	font-weight: bold;
+}
+
+.response {
+	margin: 0.5em 4em 1em 4em;
+}
+
+.scale {
+	margin: 0.25em 4.44em 0 4.44em;
+	font-style: italic;
+	color: gray;
+	font-size: 0.9em;
+}
+
+.response_unanswered {
+	font-style: italic;
+	color: gray;
+}
+
 
 
 @media print {
