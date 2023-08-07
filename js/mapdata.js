@@ -25,7 +25,7 @@ var data_inclusion = [
 	{country: 'Italy', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '>1,000', related_to_ds: '75% or more'},
 	{country: 'Jamaica', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '501-1,000', related_to_ds: '75% or more'},
 	{country: 'Japan', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '>1,000', related_to_ds: '75% or more'},
-	{country: 'Jordan and Saudi Arabia', include: 'Yes', region_size: 'Single city or town', focus: 'Holistic', members: '0-20', related_to_ds: '75% or more'},
+	{country: 'Saudi Arabia', include: 'Yes', region_size: 'Single city or town', focus: 'Holistic', members: '0-20', related_to_ds: '75% or more'},
 	{country: 'Kenya', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '101-500', related_to_ds: '75% or more'},
 	{country: 'Kosovo', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '101-500', related_to_ds: '75% or more'},
 	{country: 'Kyrgyzstan', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '21-100', related_to_ds: '75% or more'},
@@ -53,7 +53,7 @@ var data_inclusion = [
 	{country: 'Sweden', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '>1,000', related_to_ds: '75% or more'},
 	{country: 'Switzerland', include: 'Yes', region_size: 'A large region within one country (multiple states, provinces, or counties)', focus: 'Holistic', members: '501-1,000', related_to_ds: '75% or more'},
 	{country: 'Tajikistan', include: 'No', region_size: 'National', focus: 'Holistic', members: '101-500', related_to_ds: '25% - 49%'},
-	{country: 'The Netherlands', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '>1,000', related_to_ds: '75% or more'},
+	{country: 'Netherlands', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '>1,000', related_to_ds: '75% or more'},
 	{country: 'Togo', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '501-1,000', related_to_ds: '50% - 74%'},
 	{country: 'Trinidad and Tobago', include: 'No', region_size: 'National', focus: 'Holistic', members: '101-500', related_to_ds: 'Less than 25%'},
 	{country: 'Turkey', include: 'Yes', region_size: 'National', focus: 'Holistic', members: '>1,000', related_to_ds: '75% or more'},
@@ -615,7 +615,7 @@ var simplemaps_worldmap_mapdata={
 			name: "Bolivia",
 		},
 		BQBO: {
-			name: "The Netherlands",
+			name: "Netherlands",
 		},
 		BQSA: {
 			name: "Saba (Netherlands)",
@@ -837,7 +837,7 @@ var simplemaps_worldmap_mapdata={
 			name: "Jamaica",
 		},
 		JO: {
-			name: "Jordan and Saudi Arabia",
+			name: "Jordan",
 		},
 		JP: {
 			name: "Japan",
@@ -1053,7 +1053,7 @@ var simplemaps_worldmap_mapdata={
 			name: "Rwanda",
 		},
 		SA: {
-			name: "Jordan and Saudi Arabia",
+			name: "Saudi Arabia",
 		},
 		SB: {
 			name: "Solomon Islands",
