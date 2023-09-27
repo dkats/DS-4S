@@ -186,7 +186,7 @@ function setLegendGradient(top_color, bottom_color) {
 }
 
 let color_include = "#4d4dff";
-let color_exclude = "#e6e600";
+let color_exclude = "#6b6b6b";
 let color_missing = "#b3b3b3";
 let color_overall = color_include;
 let color_community_inclusion = "#dc143c";
@@ -197,7 +197,7 @@ let color_policy = "#5c4033";
 let color_gradient_min = 0.4;
 let color_not_available = 0.2;
 let hover_color_include = "#8080ff";
-let hover_color_exclude = "#ffff1a";
+let hover_color_exclude = "#303030";
 let hover_color_missing = "#d9d9d9";
 let description_include = "Survey completed";
 let description_exclude = "Survey completed, but the organization did not meet inclusion criteria";
