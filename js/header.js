@@ -12,6 +12,7 @@ function header(level = 0) {
 	document.write('	<li onclick="window.open(\'' + dir + 'country.html\',\'_self\')" id="header_country">Country Data</li>');
 	document.write('	<li onclick="window.open(\'https://redcap.partners.org/redcap/surveys/?s=J3ANH9LRYEC8CLYK\',\'_blank\')" id="header_survey">Request Access to the Survey</li>');
 	document.write('	<li style="float:right;" onclick="window.open(\'' + dir + 'citation.html\',\'_self\')" id="header_citation">Publication and Citation Information</li>');
+	document.write('	<li style="float:right;" onclick="window.open(\'' + dir + 'methods.html\',\'_self\')" id="header_methods">Methods</li>');
 	document.write('	<li style="float:right;" onclick="window.open(\'' + dir + 'about.html\',\'_self\')" id="header_about">About Us</li>');
 	document.write('</ul>');
 	document.write('</header>');
