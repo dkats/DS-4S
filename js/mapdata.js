@@ -185,15 +185,15 @@ function setLegendGradient(top_color, bottom_color) {
 	document.getElementById("map_legend").childNodes[0].childNodes[0].style.marginTop = "-0.1em";
 }
 
-let color_include = "#4d4dff";
+let color_include = "#4348db";
 let color_exclude = "#6b6b6b";
 let color_missing = "#b3b3b3";
-let color_overall = color_include;
-let color_community_inclusion = "#dc143c";
-let color_education = "#ff8c00";
-let color_health = "#36013f";
-let color_independence = "#228b22";
-let color_policy = "#5c4033";
+let color_overall = color_include;		// Blue
+let color_community_inclusion = "#2a8aa9";		// Teal
+let color_education = "#bcaf15";		// Yellow
+let color_health = "#d07c31";		// Orange
+let color_independence = "#c1231e";		// Red
+let color_policy = "#b437af";		// Magenta
 let color_gradient_min = 0.4;
 let color_not_available = 0.2;
 let hover_color_include = "#8080ff";
