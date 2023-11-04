@@ -40,27 +40,27 @@ th, td {
 #row_overall {
 	border: 1px solid transparent;
 	border-color: rgba(0, 0, 0, 0.1) transparent rgba(0, 0, 0, 0.1) transparent;
-	color: #4d4dff;
+	color: #4348db;
 }
 
 #row_community {
-	color: #dc143c;
+	color: #2a8aa9;
 }
 
 #row_education {
-	color: #ff8c00;
+	color: #bcaf15;
 }
 
 #row_health {
-	color: #36013f;
+	color: #d07c31;
 }
 
 #row_independence {
-	color: #228b22;
+	color: #c1231e;
 }
 
 #row_policy {
-	color: #5c4033;
+	color: #b437af;
 }
 
 #responses {
@@ -72,23 +72,23 @@ th, td {
 }
 
 .comm {
-	border-left: 6px solid #dc143c;
+	border-left: 6px solid #2a8aa9;
 }
 
 .edu {
-	border-left: 6px solid #ff8c00;
-}
-
-.policy {
-	border-left: 6px solid #5c4033;
+	border-left: 6px solid #bcaf15;
 }
 
 .health {
-	border-left: 6px solid #36013f;
+	border-left: 6px solid #d07c31;
 }
 
 .indep {
-	border-left: 6px solid #228b22;
+	border-left: 6px solid #c1231e;
+}
+
+.policy {
+	border-left: 6px solid #b437af;
 }
 
 .question {
