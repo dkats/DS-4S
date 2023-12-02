@@ -231,7 +231,7 @@ function set_color(name) {
 	if(country != undefined) {
 		switch(country.include.toLowerCase()) {
 			case "yes":
-				country = data_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+				country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
 
 				switch(category_select) {
 					case "Overall":
@@ -307,7 +307,7 @@ function set_description(name) {
 	if(country != undefined) {
 		switch(country.include.toLowerCase()) {
 			case "yes":
-				country = data_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+				country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
 
 				let description = "";
 				description += (category_select == "Overall" ? "<strong>" : "");

@@ -28,8 +28,8 @@ let score_none = "&ndash;";
 let rank_none = "&ndash;";
 let responses_el = document.getElementById("responses");
 
-for (let obj in data_scores) {
-	let val = data_scores[obj];
+for (let obj in ds4s_scores) {
+	let val = ds4s_scores[obj];
 	
 	// Add country to drop down options list
 	let option = document.createElement("option");
@@ -50,7 +50,7 @@ function loadData() {
 	}
 
 	// LOAD SCORE DATA
-	let data = data_scores.find(({country}) => country.toLowerCase() === url_country.toLowerCase());
+	let data = ds4s_scores.find(({country}) => country.toLowerCase() === url_country.toLowerCase());
 	if(data != undefined) {
 		if(country_name.length == 0) {
 			country_select.value = data.country;
