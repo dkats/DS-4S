@@ -7,16 +7,16 @@ article {
 	overflow: auto;
 }
 
-#category {
+#selection {
 	text-align: center;
-	font-size: 1.1em;
+	font-size: 1em;
 	font-weight: bold;
 	border: 1px solid transparent;
 	border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
 	padding: 6pt 0;
 }
 
-#category_label {
+#dataset_label, #category_label {
 	font-size: 1.25em;
 }
 
