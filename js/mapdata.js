@@ -235,10 +235,8 @@ function set_color(name) {
 				dataset_select = document.getElementById("dataset_select").value;
 				if(dataset_select == "DS-4S") {
 					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
-					console.log("DS-4S");
 				} else if(dataset_select == "General") {
 					country = gen_wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
-					console.log("Well-being");
 				}
 
 				switch(category_select) {
@@ -318,10 +316,8 @@ function set_description(name) {
 				dataset_select = document.getElementById("dataset_select").value;
 				if(dataset_select == "DS-4S") {
 					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
-					console.log("DS-4S");
 				} else if(dataset_select == "General") {
 					country = gen_wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
-					console.log("Well-being");
 				}
 
 				let description = "";
@@ -1318,6 +1314,7 @@ for (let obj in dataNotOnMap) {
 
 function repaint() {
 	category_select = document.getElementById("category_select").value;
+	document.getElementById("category_overall-general").text = document.getElementById("dataset_select").value == "General" ? "General" : "*Overall*";
 
 	for (let obj in simplemaps_worldmap_mapdata.state_specific) {
 		country_loop(simplemaps_worldmap_mapdata.state_specific[obj]);
