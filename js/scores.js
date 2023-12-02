@@ -155,8 +155,79 @@ let min_score_education = 0;
 let min_score_health = 0;
 let min_score_independence = 0;
 let min_score_policy = 0;
+
 for (let obj in ds4s_scores) {
 	let val = ds4s_scores[obj];
+	val['all_domain_score'] = Number.parseFloat(val['all_domain_score']);
+	val['all_domain_rank'] = Number.parseInt(val['all_domain_rank']);
+	val['community_score'] = Number.parseFloat(val['community_score']);
+	val['community_rank'] = Number.parseInt(val['community_rank']);
+	val['edu_score'] = Number.parseFloat(val['edu_score']);
+	val['edu_rank'] = Number.parseInt(val['edu_rank']);
+	val['health_score'] = Number.parseFloat(val['health_score']);
+	val['health_rank'] = Number.parseInt(val['health_rank']);
+	val['indep_score'] = Number.parseFloat(val['indep_score']);
+	val['indep_rank'] = Number.parseInt(val['indep_rank']);
+	val['policy_score'] = Number.parseFloat(val['policy_score']);
+	val['policy_rank'] = Number.parseInt(val['policy_rank']);
+	if(!isNaN(val['all_domain_score'])) {
+		max_rank_overall = max_rank_overall + 1;
+	}
+	if(!isNaN(val['community_score'])) {
+		max_rank_community = max_rank_community + 1;
+	}
+	if(!isNaN(val['edu_score'])) {
+		max_rank_education = max_rank_education + 1;
+	}
+	if(!isNaN(val['health_score'])) {
+		max_rank_health = max_rank_health + 1;
+	}
+	if(!isNaN(val['indep_score'])) {
+		max_rank_independence = max_rank_independence + 1;
+	}
+	if(!isNaN(val['policy_score'])) {
+		max_rank_policy = max_rank_policy + 1;
+	}
+	if(max_score_overall < val['all_domain_score']) {
+		max_score_overall = val['all_domain_score'];
+	}
+	if(max_score_community < val['community_score']) {
+		max_score_community = val['community_score'];
+	}
+	if(max_score_education < val['edu_score']) {
+		max_score_education = val['edu_score'];
+	}
+	if(max_score_health < val['health_score']) {
+		max_score_health = val['health_score'];
+	}
+	if(max_score_independence < val['indep_score']) {
+		max_score_independence = val['indep_score'];
+	}
+	if(max_score_policy < val['policy_score']) {
+		max_score_policy = val['policy_score'];
+	}
+	if(min_score_overall > val['all_domain_score']) {
+		min_score_overall = val['all_domain_score'];
+	}
+	if(min_score_community > val['community_score']) {
+		min_score_community = val['community_score'];
+	}
+	if(min_score_education > val['edu_score']) {
+		min_score_education = val['edu_score'];
+	}
+	if(min_score_health > val['health_score']) {
+		min_score_health = val['health_score'];
+	}
+	if(min_score_independence > val['indep_score']) {
+		min_score_independence = val['indep_score'];
+	}
+	if(min_score_policy > val['policy_score']) {
+		min_score_policy = val['policy_score'];
+	}
+}
+
+for (let obj in gen_wellbeing_scores) {
+	let val = gen_wellbeing_scores[obj];
 	val['all_domain_score'] = Number.parseFloat(val['all_domain_score']);
 	val['all_domain_rank'] = Number.parseInt(val['all_domain_rank']);
 	val['community_score'] = Number.parseFloat(val['community_score']);

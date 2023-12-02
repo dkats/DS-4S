@@ -223,6 +223,7 @@ let inactive_missing = "no";
 let zoomable_include = "no";
 let zoomable_exclude = "no";
 let zoomable_missing = "no";
+let dataset_select = document.getElementById("dataset_select").value;
 let category_select = document.getElementById("category_select").value;
 
 function set_color(name) {
@@ -231,7 +232,14 @@ function set_color(name) {
 	if(country != undefined) {
 		switch(country.include.toLowerCase()) {
 			case "yes":
-				country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+				dataset_select = document.getElementById("dataset_select").value;
+				if(dataset_select == "DS-4S") {
+					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					console.log("DS-4S");
+				} else if(dataset_select == "General") {
+					country = gen_wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					console.log("Well-being");
+				}
 
 				switch(category_select) {
 					case "Overall":
@@ -307,7 +315,14 @@ function set_description(name) {
 	if(country != undefined) {
 		switch(country.include.toLowerCase()) {
 			case "yes":
-				country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+				dataset_select = document.getElementById("dataset_select").value;
+				if(dataset_select == "DS-4S") {
+					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					console.log("DS-4S");
+				} else if(dataset_select == "General") {
+					country = gen_wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					console.log("Well-being");
+				}
 
 				let description = "";
 				description += (category_select == "Overall" ? "<strong>" : "");
