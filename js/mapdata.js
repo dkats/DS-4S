@@ -189,6 +189,8 @@ let color_include = "#4348db";
 let color_exclude = "#6b6b6b";
 let color_missing = "#b3b3b3";
 let color_overall = color_include;		// Blue
+// TODO: Use different color for general map (as opposed to overall)
+let color_general = "#30a92a";		// Green
 let color_community_inclusion = "#2a8aa9";		// Teal
 let color_education = "#bcaf15";		// Yellow
 let color_health = "#d07c31";		// Orange
