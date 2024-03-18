@@ -85,7 +85,7 @@ var ds4s_scores = [
 	{country: 'Uruguay', all_domain_score: '10.44064', all_domain_rank: '15', community_score: '-1.767362', community_rank: '42', edu_score: '2.864993', edu_rank: '16', health_score: '6.329782', health_rank: '14', indep_score: '1.206136', indep_rank: '18', policy_score: '1.869865', policy_rank: '12'},
 	{country: 'Zimbabwe', all_domain_score: '-12.52897', all_domain_rank: '35', community_score: '-0.60632', community_rank: '30', edu_score: '-5.132654', edu_rank: '40', health_score: '-9.242934', health_rank: '47', indep_score: '-2.951284', indep_rank: '33', policy_score: '-0.3401802', policy_rank: '33'},
 ];
-var gen_wellbeing_scores = [
+var wellbeing_scores = [
 	{country: 'Albania', all_domain_score: '0.7', all_domain_rank: '20', community_score: '1.5', community_rank: '12', edu_score: '-0.6', edu_rank: '30', health_score: '0.5', health_rank: '29', indep_score: 'null', indep_rank: 'null', policy_score: '0.8', policy_rank: '21'},
 	{country: 'Argentina', all_domain_score: '0.7', all_domain_rank: '20', community_score: '1.4', community_rank: '22', edu_score: '1.2', edu_rank: '19', health_score: '1.7', health_rank: '19', indep_score: 'null', indep_rank: 'null', policy_score: '0.6', policy_rank: '22'},
 	{country: 'Australia', all_domain_score: '0.9', all_domain_rank: '1', community_score: '1.6', community_rank: '1', edu_score: '4', edu_rank: '1', health_score: '2.8', health_rank: '6', indep_score: 'null', indep_rank: 'null', policy_score: '2.3', policy_rank: '2'},
@@ -226,8 +226,8 @@ for (let obj in ds4s_scores) {
 	}
 }
 
-for (let obj in gen_wellbeing_scores) {
-	let val = gen_wellbeing_scores[obj];
+for (let obj in wellbeing_scores) {
+	let val = wellbeing_scores[obj];
 	val['all_domain_score'] = Number.parseFloat(val['all_domain_score']);
 	val['all_domain_rank'] = Number.parseInt(val['all_domain_rank']);
 	val['community_score'] = Number.parseFloat(val['community_score']);

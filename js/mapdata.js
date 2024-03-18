@@ -238,7 +238,7 @@ function set_color(name) {
 				if(dataset_select == "DS-4S") {
 					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
 				} else if(dataset_select == "General") {
-					country = gen_wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					country = wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
 				}
 
 				switch(category_select) {
@@ -319,7 +319,7 @@ function set_description(name) {
 				if(dataset_select == "DS-4S") {
 					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
 				} else if(dataset_select == "General") {
-					country = gen_wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					country = wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
 				}
 
 				let description = "";
