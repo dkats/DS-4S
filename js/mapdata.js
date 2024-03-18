@@ -230,6 +230,7 @@ let category_select = document.getElementById("category_select").value;
 
 function set_color(name) {
 	let country = data_inclusion.find(({country}) => country.toLowerCase() === name.toLowerCase());
+	let summary = null;
 
 	if(country != undefined) {
 		switch(country.include.toLowerCase()) {
@@ -237,8 +238,10 @@ function set_color(name) {
 				dataset_select = document.getElementById("dataset_select").value;
 				if(dataset_select == "DS-4S") {
 					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					summary = ds4s_summary;
 				} else if(dataset_select == "General") {
 					country = wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					summary = wellbeing_summary;
 				}
 
 				switch(category_select) {
@@ -246,37 +249,37 @@ function set_color(name) {
 						if(isNaN(country.all_domain_score)) {
 							return getGradientColor("#ffffff", color_overall, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_overall, color_gradient_min+(1-color_gradient_min)*(country.all_domain_score-min_score_overall)/(max_score_overall-min_score_overall));
+						return getGradientColor("#ffffff", color_overall, color_gradient_min+(1-color_gradient_min)*(country.all_domain_score-summary.min_score_overall)/(summary.max_score_overall-summary.min_score_overall));
 						break;
 					case "Community inclusion":
 						if(isNaN(country.community_score)) {
 							return getGradientColor("#ffffff", color_community_inclusion, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_community_inclusion, color_gradient_min+(1-color_gradient_min)*(country.community_score-min_score_community)/(max_score_community-min_score_community));
+						return getGradientColor("#ffffff", color_community_inclusion, color_gradient_min+(1-color_gradient_min)*(country.community_score-summary.min_score_community)/(summary.max_score_community-summary.min_score_community));
 						break;
 					case "Education":
 						if(isNaN(country.edu_score)) {
 							return getGradientColor("#ffffff", color_education, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_education, color_gradient_min+(1-color_gradient_min)*(country.edu_score-min_score_education)/(max_score_education-min_score_education));
+						return getGradientColor("#ffffff", color_education, color_gradient_min+(1-color_gradient_min)*(country.edu_score-summary.min_score_education)/(summary.max_score_education-summary.min_score_education));
 						break;
 					case "Health":
 						if(isNaN(country.health_score)) {
 							return getGradientColor("#ffffff", color_health, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_health, color_gradient_min+(1-color_gradient_min)*(country.health_score-min_score_health)/(max_score_health-min_score_health));
+						return getGradientColor("#ffffff", color_health, color_gradient_min+(1-color_gradient_min)*(country.health_score-summary.min_score_health)/(summary.max_score_health-summary.min_score_health));
 						break;
 					case "Independence":
 						if(isNaN(country.indep_score)) {
 							return getGradientColor("#ffffff", color_independence, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_independence, color_gradient_min+(1-color_gradient_min)*(country.indep_score-min_score_independence)/(max_score_independence-min_score_independence));
+						return getGradientColor("#ffffff", color_independence, color_gradient_min+(1-color_gradient_min)*(country.indep_score-summary.min_score_independence)/(summary.max_score_independence-summary.min_score_independence));
 						break;
 					case "Policy":
 						if(isNaN(country.policy_score)) {
 							return getGradientColor("#ffffff", color_policy, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_policy, color_gradient_min+(1-color_gradient_min)*(country.policy_score-min_score_policy)/(max_score_policy-min_score_policy));
+						return getGradientColor("#ffffff", color_policy, color_gradient_min+(1-color_gradient_min)*(country.policy_score-summary.min_score_policy)/(summary.max_score_policy-summary.min_score_policy));
 						break;
 				}
 				return color_include;

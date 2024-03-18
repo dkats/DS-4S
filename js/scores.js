@@ -85,6 +85,26 @@ var ds4s_scores = [
 	{country: 'Uruguay', all_domain_score: '10.44064', all_domain_rank: '15', community_score: '-1.767362', community_rank: '42', edu_score: '2.864993', edu_rank: '16', health_score: '6.329782', health_rank: '14', indep_score: '1.206136', indep_rank: '18', policy_score: '1.869865', policy_rank: '12'},
 	{country: 'Zimbabwe', all_domain_score: '-12.52897', all_domain_rank: '35', community_score: '-0.60632', community_rank: '30', edu_score: '-5.132654', edu_rank: '40', health_score: '-9.242934', health_rank: '47', indep_score: '-2.951284', indep_rank: '33', policy_score: '-0.3401802', policy_rank: '33'},
 ];
+var ds4s_summary = {
+	max_rank_overall : 0,
+	max_rank_community : 0,
+	max_rank_education : 0,
+	max_rank_health : 0,
+	max_rank_independence : 0,
+	max_rank_policy : 0,
+	max_score_overall : 0,
+	max_score_community : 0,
+	max_score_education : 0,
+	max_score_health : 0,
+	max_score_independence : 0,
+	max_score_policy : 0,
+	min_score_overall : 0,
+	min_score_community : 0,
+	min_score_education : 0,
+	min_score_health : 0,
+	min_score_independence : 0,
+	min_score_policy : 0
+}
 var wellbeing_scores = [
 	{country: 'Albania', all_domain_score: '0.7', all_domain_rank: '20', community_score: '1.5', community_rank: '12', edu_score: '-0.6', edu_rank: '30', health_score: '0.5', health_rank: '29', indep_score: 'null', indep_rank: 'null', policy_score: '0.8', policy_rank: '21'},
 	{country: 'Argentina', all_domain_score: '0.7', all_domain_rank: '20', community_score: '1.4', community_rank: '22', edu_score: '1.2', edu_rank: '19', health_score: '1.7', health_rank: '19', indep_score: 'null', indep_rank: 'null', policy_score: '0.6', policy_rank: '22'},
@@ -137,24 +157,26 @@ var wellbeing_scores = [
 	{country: 'Uruguay', all_domain_score: '0.7', all_domain_rank: '20', community_score: '1.4', community_rank: '22', edu_score: '-0.5', edu_rank: '29', health_score: '1.9', health_rank: '18', indep_score: 'null', indep_rank: 'null', policy_score: '0.4', policy_rank: '23'},
 	{country: 'Zimbabwe', all_domain_score: '0.4', all_domain_rank: '39', community_score: '-4.7', community_rank: '45', edu_score: '-1.1', edu_rank: '34', health_score: '-4.9', health_rank: '45', indep_score: 'null', indep_rank: 'null', policy_score: 'null', policy_rank: 'null'},
 ];
-let max_rank_overall = 0;
-let max_rank_community = 0;
-let max_rank_education = 0;
-let max_rank_health = 0;
-let max_rank_independence = 0;
-let max_rank_policy = 0;
-let max_score_overall = 0;
-let max_score_community = 0;
-let max_score_education = 0;
-let max_score_health = 0;
-let max_score_independence = 0;
-let max_score_policy = 0;
-let min_score_overall = 0;
-let min_score_community = 0;
-let min_score_education = 0;
-let min_score_health = 0;
-let min_score_independence = 0;
-let min_score_policy = 0;
+var wellbeing_summary = {
+	max_rank_overall : 0,
+	max_rank_community : 0,
+	max_rank_education : 0,
+	max_rank_health : 0,
+	max_rank_independence : 0,
+	max_rank_policy : 0,
+	max_score_overall : 0,
+	max_score_community : 0,
+	max_score_education : 0,
+	max_score_health : 0,
+	max_score_independence : 0,
+	max_score_policy : 0,
+	min_score_overall : 0,
+	min_score_community : 0,
+	min_score_education : 0,
+	min_score_health : 0,
+	min_score_independence : 0,
+	min_score_policy : 0
+}
 
 for (let obj in ds4s_scores) {
 	let val = ds4s_scores[obj];
@@ -171,58 +193,58 @@ for (let obj in ds4s_scores) {
 	val['policy_score'] = Number.parseFloat(val['policy_score']);
 	val['policy_rank'] = Number.parseInt(val['policy_rank']);
 	if(!isNaN(val['all_domain_score'])) {
-		max_rank_overall = max_rank_overall + 1;
+		ds4s_summary.max_rank_overall = ds4s_summary.max_rank_overall + 1;
 	}
 	if(!isNaN(val['community_score'])) {
-		max_rank_community = max_rank_community + 1;
+		ds4s_summary.max_rank_community = ds4s_summary.max_rank_community + 1;
 	}
 	if(!isNaN(val['edu_score'])) {
-		max_rank_education = max_rank_education + 1;
+		ds4s_summary.max_rank_education = ds4s_summary.max_rank_education + 1;
 	}
 	if(!isNaN(val['health_score'])) {
-		max_rank_health = max_rank_health + 1;
+		ds4s_summary.max_rank_health = ds4s_summary.max_rank_health + 1;
 	}
 	if(!isNaN(val['indep_score'])) {
-		max_rank_independence = max_rank_independence + 1;
+		ds4s_summary.max_rank_independence = ds4s_summary.max_rank_independence + 1;
 	}
 	if(!isNaN(val['policy_score'])) {
-		max_rank_policy = max_rank_policy + 1;
+		ds4s_summary.max_rank_policy = ds4s_summary.max_rank_policy + 1;
 	}
-	if(max_score_overall < val['all_domain_score']) {
-		max_score_overall = val['all_domain_score'];
+	if(ds4s_summary.max_score_overall < val['all_domain_score']) {
+		ds4s_summary.max_score_overall = val['all_domain_score'];
 	}
-	if(max_score_community < val['community_score']) {
-		max_score_community = val['community_score'];
+	if(ds4s_summary.max_score_community < val['community_score']) {
+		ds4s_summary.max_score_community = val['community_score'];
 	}
-	if(max_score_education < val['edu_score']) {
-		max_score_education = val['edu_score'];
+	if(ds4s_summary.max_score_education < val['edu_score']) {
+		ds4s_summary.max_score_education = val['edu_score'];
 	}
-	if(max_score_health < val['health_score']) {
-		max_score_health = val['health_score'];
+	if(ds4s_summary.max_score_health < val['health_score']) {
+		ds4s_summary.max_score_health = val['health_score'];
 	}
-	if(max_score_independence < val['indep_score']) {
-		max_score_independence = val['indep_score'];
+	if(ds4s_summary.max_score_independence < val['indep_score']) {
+		ds4s_summary.max_score_independence = val['indep_score'];
 	}
-	if(max_score_policy < val['policy_score']) {
-		max_score_policy = val['policy_score'];
+	if(ds4s_summary.max_score_policy < val['policy_score']) {
+		ds4s_summary.max_score_policy = val['policy_score'];
 	}
-	if(min_score_overall > val['all_domain_score']) {
-		min_score_overall = val['all_domain_score'];
+	if(ds4s_summary.min_score_overall > val['all_domain_score']) {
+		ds4s_summary.min_score_overall = val['all_domain_score'];
 	}
-	if(min_score_community > val['community_score']) {
-		min_score_community = val['community_score'];
+	if(ds4s_summary.min_score_community > val['community_score']) {
+		ds4s_summary.min_score_community = val['community_score'];
 	}
-	if(min_score_education > val['edu_score']) {
-		min_score_education = val['edu_score'];
+	if(ds4s_summary.min_score_education > val['edu_score']) {
+		ds4s_summary.min_score_education = val['edu_score'];
 	}
-	if(min_score_health > val['health_score']) {
-		min_score_health = val['health_score'];
+	if(ds4s_summary.min_score_health > val['health_score']) {
+		ds4s_summary.min_score_health = val['health_score'];
 	}
-	if(min_score_independence > val['indep_score']) {
-		min_score_independence = val['indep_score'];
+	if(ds4s_summary.min_score_independence > val['indep_score']) {
+		ds4s_summary.min_score_independence = val['indep_score'];
 	}
-	if(min_score_policy > val['policy_score']) {
-		min_score_policy = val['policy_score'];
+	if(ds4s_summary.min_score_policy > val['policy_score']) {
+		ds4s_summary.min_score_policy = val['policy_score'];
 	}
 }
 
@@ -241,57 +263,57 @@ for (let obj in wellbeing_scores) {
 	val['policy_score'] = Number.parseFloat(val['policy_score']);
 	val['policy_rank'] = Number.parseInt(val['policy_rank']);
 	if(!isNaN(val['all_domain_score'])) {
-		max_rank_overall = max_rank_overall + 1;
+		wellbeing_summary.max_rank_overall = wellbeing_summary.max_rank_overall + 1;
 	}
 	if(!isNaN(val['community_score'])) {
-		max_rank_community = max_rank_community + 1;
+		wellbeing_summary.max_rank_community = wellbeing_summary.max_rank_community + 1;
 	}
 	if(!isNaN(val['edu_score'])) {
-		max_rank_education = max_rank_education + 1;
+		wellbeing_summary.max_rank_education = wellbeing_summary.max_rank_education + 1;
 	}
 	if(!isNaN(val['health_score'])) {
-		max_rank_health = max_rank_health + 1;
+		wellbeing_summary.max_rank_health = wellbeing_summary.max_rank_health + 1;
 	}
 	if(!isNaN(val['indep_score'])) {
-		max_rank_independence = max_rank_independence + 1;
+		wellbeing_summary.max_rank_independence = wellbeing_summary.max_rank_independence + 1;
 	}
 	if(!isNaN(val['policy_score'])) {
-		max_rank_policy = max_rank_policy + 1;
+		wellbeing_summary.max_rank_policy = wellbeing_summary.max_rank_policy + 1;
 	}
-	if(max_score_overall < val['all_domain_score']) {
-		max_score_overall = val['all_domain_score'];
+	if(wellbeing_summary.max_score_overall < val['all_domain_score']) {
+		wellbeing_summary.max_score_overall = val['all_domain_score'];
 	}
-	if(max_score_community < val['community_score']) {
-		max_score_community = val['community_score'];
+	if(wellbeing_summary.max_score_community < val['community_score']) {
+		wellbeing_summary.max_score_community = val['community_score'];
 	}
-	if(max_score_education < val['edu_score']) {
-		max_score_education = val['edu_score'];
+	if(wellbeing_summary.max_score_education < val['edu_score']) {
+		wellbeing_summary.max_score_education = val['edu_score'];
 	}
-	if(max_score_health < val['health_score']) {
-		max_score_health = val['health_score'];
+	if(wellbeing_summary.max_score_health < val['health_score']) {
+		wellbeing_summary.max_score_health = val['health_score'];
 	}
-	if(max_score_independence < val['indep_score']) {
-		max_score_independence = val['indep_score'];
+	if(wellbeing_summary.max_score_independence < val['indep_score']) {
+		wellbeing_summary.max_score_independence = val['indep_score'];
 	}
-	if(max_score_policy < val['policy_score']) {
-		max_score_policy = val['policy_score'];
+	if(wellbeing_summary.max_score_policy < val['policy_score']) {
+		wellbeing_summary.max_score_policy = val['policy_score'];
 	}
-	if(min_score_overall > val['all_domain_score']) {
-		min_score_overall = val['all_domain_score'];
+	if(wellbeing_summary.min_score_overall > val['all_domain_score']) {
+		wellbeing_summary.min_score_overall = val['all_domain_score'];
 	}
-	if(min_score_community > val['community_score']) {
-		min_score_community = val['community_score'];
+	if(wellbeing_summary.min_score_community > val['community_score']) {
+		wellbeing_summary.min_score_community = val['community_score'];
 	}
-	if(min_score_education > val['edu_score']) {
-		min_score_education = val['edu_score'];
+	if(wellbeing_summary.min_score_education > val['edu_score']) {
+		wellbeing_summary.min_score_education = val['edu_score'];
 	}
-	if(min_score_health > val['health_score']) {
-		min_score_health = val['health_score'];
+	if(wellbeing_summary.min_score_health > val['health_score']) {
+		wellbeing_summary.min_score_health = val['health_score'];
 	}
-	if(min_score_independence > val['indep_score']) {
-		min_score_independence = val['indep_score'];
+	if(wellbeing_summary.min_score_independence > val['indep_score']) {
+		wellbeing_summary.min_score_independence = val['indep_score'];
 	}
-	if(min_score_policy > val['policy_score']) {
-		min_score_policy = val['policy_score'];
+	if(wellbeing_summary.min_score_policy > val['policy_score']) {
+		wellbeing_summary.min_score_policy = val['policy_score'];
 	}
 }

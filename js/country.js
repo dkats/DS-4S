@@ -56,29 +56,29 @@ function loadData() {
 			country_select.value = data.country;
 		}
 		rank_overall.innerHTML = ordinal_super(data['all_domain_rank']);
-		rank_overall_outof.innerHTML = "/" + max_rank_overall;
+		rank_overall_outof.innerHTML = "/" + ds4s_summary.max_rank_overall;
 		score_overall.innerHTML = roundTo(data['all_domain_score'],score_rounding);
-		score_overall_range.innerHTML = "(" + roundTo(min_score_overall,score_rounding) + "&ndash;" + roundTo(max_score_overall,score_rounding) + ")"
+		score_overall_range.innerHTML = "(" + roundTo(ds4s_summary.min_score_overall,score_rounding) + "&ndash;" + roundTo(ds4s_summary.max_score_overall,score_rounding) + ")"
 		rank_community.innerHTML = ordinal_super(data['community_rank']);
-		rank_community_outof.innerHTML = "/" + max_rank_community;
+		rank_community_outof.innerHTML = "/" + ds4s_summary.max_rank_community;
 		score_community.innerHTML = roundTo(data['community_score'],score_rounding);
-		score_community_range.innerHTML = "(" + roundTo(min_score_community,score_rounding) + "&ndash;" + roundTo(max_score_community,score_rounding) + ")"
+		score_community_range.innerHTML = "(" + roundTo(ds4s_summary.min_score_community,score_rounding) + "&ndash;" + roundTo(ds4s_summary.max_score_community,score_rounding) + ")"
 		rank_education.innerHTML = ordinal_super(data['edu_rank']);
-		rank_education_outof.innerHTML = "/" + max_rank_education;
+		rank_education_outof.innerHTML = "/" + ds4s_summary.max_rank_education;
 		score_education.innerHTML = roundTo(data['edu_score'],score_rounding);
-		score_education_range.innerHTML = "(" + roundTo(min_score_education,score_rounding) + "&ndash;" + roundTo(max_score_education,score_rounding) + ")"
+		score_education_range.innerHTML = "(" + roundTo(ds4s_summary.min_score_education,score_rounding) + "&ndash;" + roundTo(ds4s_summary.max_score_education,score_rounding) + ")"
 		rank_health.innerHTML = ordinal_super(data['health_rank']);
-		rank_health_outof.innerHTML = "/" + max_rank_health;
+		rank_health_outof.innerHTML = "/" + ds4s_summary.max_rank_health;
 		score_health.innerHTML = roundTo(data['health_score'],score_rounding);
-		score_health_range.innerHTML = "(" + roundTo(min_score_health,score_rounding) + "&ndash;" + roundTo(max_score_health,score_rounding) + ")"
+		score_health_range.innerHTML = "(" + roundTo(ds4s_summary.min_score_health,score_rounding) + "&ndash;" + roundTo(ds4s_summary.max_score_health,score_rounding) + ")"
 		rank_independence.innerHTML = ordinal_super(data['indep_rank']);
-		rank_independence_outof.innerHTML = "/" + max_rank_independence;
+		rank_independence_outof.innerHTML = "/" + ds4s_summary.max_rank_independence;
 		score_independence.innerHTML = roundTo(data['indep_score'],score_rounding);
-		score_independence_range.innerHTML = "(" + roundTo(min_score_independence,score_rounding) + "&ndash;" + roundTo(max_score_independence,score_rounding) + ")"
+		score_independence_range.innerHTML = "(" + roundTo(ds4s_summary.min_score_independence,score_rounding) + "&ndash;" + roundTo(ds4s_summary.max_score_independence,score_rounding) + ")"
 		rank_policy.innerHTML = ordinal_super(data['policy_rank']);
-		rank_policy_outof.innerHTML = "/" + max_rank_policy;
+		rank_policy_outof.innerHTML = "/" + ds4s_summary.max_rank_policy;
 		score_policy.innerHTML = roundTo(data['policy_score'],score_rounding);
-		score_policy_range.innerHTML = "(" + roundTo(min_score_policy,score_rounding) + "&ndash;" + roundTo(max_score_policy,score_rounding) + ")"
+		score_policy_range.innerHTML = "(" + roundTo(ds4s_summary.min_score_policy,score_rounding) + "&ndash;" + roundTo(ds4s_summary.max_score_policy,score_rounding) + ")"
 	} else {
 		console.log(url_country + " not found");
 	}
