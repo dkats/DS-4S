@@ -185,15 +185,17 @@ function setLegendGradient(top_color, bottom_color) {
 	document.getElementById("map_legend").childNodes[0].childNodes[0].style.marginTop = "-0.1em";
 }
 
-let color_include = "#4d4dff";
+let color_include = "#4348db";
 let color_exclude = "#6b6b6b";
 let color_missing = "#b3b3b3";
-let color_overall = color_include;
-let color_community_inclusion = "#dc143c";
-let color_education = "#ff8c00";
-let color_health = "#36013f";
-let color_independence = "#228b22";
-let color_policy = "#5c4033";
+let color_overall = color_include;		// Blue
+// TODO: Use different color for general map (as opposed to overall)
+let color_general = "#bcaf15";		// Yellow
+let color_community_inclusion = "#2a8aa9";		// Teal
+let color_education = "#30a92a";		// Green
+let color_health = "#d07c31";		// Orange
+let color_independence = "#c1231e";		// Red
+let color_policy = "#b437af";		// Magenta
 let color_gradient_min = 0.4;
 let color_not_available = 0.2;
 let hover_color_include = "#8080ff";
@@ -223,52 +225,61 @@ let inactive_missing = "no";
 let zoomable_include = "no";
 let zoomable_exclude = "no";
 let zoomable_missing = "no";
+let dataset_select = document.getElementById("dataset_select").value;
 let category_select = document.getElementById("category_select").value;
 
 function set_color(name) {
 	let country = data_inclusion.find(({country}) => country.toLowerCase() === name.toLowerCase());
+	let summary = null;
 
 	if(country != undefined) {
 		switch(country.include.toLowerCase()) {
 			case "yes":
-				country = data_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+				dataset_select = document.getElementById("dataset_select").value;
+				if(dataset_select == "DS-4S") {
+					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					summary = ds4s_summary;
+				} else if(dataset_select == "General") {
+					country = wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+					summary = wellbeing_summary;
+				}
 
 				switch(category_select) {
 					case "Overall":
 						if(isNaN(country.all_domain_score)) {
 							return getGradientColor("#ffffff", color_overall, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_overall, color_gradient_min+(1-color_gradient_min)*(country.all_domain_score-min_score_overall)/(max_score_overall-min_score_overall));
+						return getGradientColor("#ffffff", color_overall, color_gradient_min+(1-color_gradient_min)*(country.all_domain_score-summary.min_score_overall)/(summary.max_score_overall-summary.min_score_overall));
 						break;
 					case "Community inclusion":
 						if(isNaN(country.community_score)) {
 							return getGradientColor("#ffffff", color_community_inclusion, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_community_inclusion, color_gradient_min+(1-color_gradient_min)*(country.community_score-min_score_community)/(max_score_community-min_score_community));
+						return getGradientColor("#ffffff", color_community_inclusion, color_gradient_min+(1-color_gradient_min)*(country.community_score-summary.min_score_community)/(summary.max_score_community-summary.min_score_community));
 						break;
 					case "Education":
 						if(isNaN(country.edu_score)) {
 							return getGradientColor("#ffffff", color_education, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_education, color_gradient_min+(1-color_gradient_min)*(country.edu_score-min_score_education)/(max_score_education-min_score_education));
+						return getGradientColor("#ffffff", color_education, color_gradient_min+(1-color_gradient_min)*(country.edu_score-summary.min_score_education)/(summary.max_score_education-summary.min_score_education));
 						break;
 					case "Health":
 						if(isNaN(country.health_score)) {
 							return getGradientColor("#ffffff", color_health, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_health, color_gradient_min+(1-color_gradient_min)*(country.health_score-min_score_health)/(max_score_health-min_score_health));
+						return getGradientColor("#ffffff", color_health, color_gradient_min+(1-color_gradient_min)*(country.health_score-summary.min_score_health)/(summary.max_score_health-summary.min_score_health));
 						break;
 					case "Independence":
 						if(isNaN(country.indep_score)) {
 							return getGradientColor("#ffffff", color_independence, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_independence, color_gradient_min+(1-color_gradient_min)*(country.indep_score-min_score_independence)/(max_score_independence-min_score_independence));
+						return getGradientColor("#ffffff", color_independence, color_gradient_min+(1-color_gradient_min)*(country.indep_score-summary.min_score_independence)/(summary.max_score_independence-summary.min_score_independence));
 						break;
 					case "Policy":
 						if(isNaN(country.policy_score)) {
 							return getGradientColor("#ffffff", color_policy, color_not_available);
 						}
-						return getGradientColor("#ffffff", color_policy, color_gradient_min+(1-color_gradient_min)*(country.policy_score-min_score_policy)/(max_score_policy-min_score_policy));
+						return getGradientColor("#ffffff", color_policy, color_gradient_min+(1-color_gradient_min)*(country.policy_score-summary.min_score_policy)/(summary.max_score_policy-summary.min_score_policy));
 						break;
 				}
 				return color_include;
@@ -307,7 +318,12 @@ function set_description(name) {
 	if(country != undefined) {
 		switch(country.include.toLowerCase()) {
 			case "yes":
-				country = data_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+				dataset_select = document.getElementById("dataset_select").value;
+				if(dataset_select == "DS-4S") {
+					country = ds4s_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+				} else if(dataset_select == "General") {
+					country = wellbeing_scores.find(({country}) => country.toLowerCase() === name.toLowerCase());
+				}
 
 				let description = "";
 				description += (category_select == "Overall" ? "<strong>" : "");
@@ -1303,6 +1319,7 @@ for (let obj in dataNotOnMap) {
 
 function repaint() {
 	category_select = document.getElementById("category_select").value;
+	document.getElementById("category_overall-general").text = document.getElementById("dataset_select").value == "General" ? "General" : "*Overall*";
 
 	for (let obj in simplemaps_worldmap_mapdata.state_specific) {
 		country_loop(simplemaps_worldmap_mapdata.state_specific[obj]);

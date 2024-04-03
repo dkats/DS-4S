@@ -7,16 +7,16 @@ article {
 	overflow: auto;
 }
 
-#category {
+#selection {
 	text-align: center;
-	font-size: 1.1em;
+	font-size: 1em;
 	font-weight: bold;
 	border: 1px solid transparent;
 	border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
 	padding: 6pt 0;
 }
 
-#category_label {
+#dataset_label, #category_label {
 	font-size: 1.25em;
 }
 
@@ -50,27 +50,31 @@ article {
 }
 
 .description_overall {
-	color: #4d4dff;
+	color: #4348db;
+}
+
+.description_general {
+	color: #bcaf15;
 }
 
 .description_community {
-	color: #dc143c;
+	color: #2a8aa9;
 }
 
 .description_edu {
-	color: #ff8c00;
+	color: #30a92a;
 }
 
 .description_health {
-	color: #36013f;
+	color: #d07c31;
 }
 
 .description_indep {
-	color: #228b22;
+	color: #c1231e;
 }
 
 .description_policy {
-	color: #5c4033;
+	color: #b437af;
 }
 
 
