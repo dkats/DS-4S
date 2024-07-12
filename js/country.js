@@ -134,7 +134,15 @@ function loadData() {
 			out += "<div class='question_wrapper " + data_dictionary[i].variable.split("_")[0] + "'>";
 			out += "<p class='question'>" + data_dictionary[i].question + "</p>";
 			out += (data_dictionary[i].scale === "null" ? "null" : "<p class='scale'>(Scale:&nbsp;&nbsp;&nbsp;&nbsp;" + data_dictionary[i].scale.replaceAll(/[0-9],/g, '').replaceAll('<br>', '').replaceAll(" | ","&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;") + ")</p>");
-			out += "<p class='response'>" + (data[data_dictionary[i].variable] === "null" ? "<span class='response_unanswered'>Not answered</span>" : data[data_dictionary[i].variable]) + "</p>";
+			out += "<p class='response'>";
+			if(data[data_dictionary[i].variable] === "null") {
+				out += "<span class='response_unanswered'>Not answered</span>";
+			} else if(data[data_dictionary[i].variable].toUpperCase() === "NA") {
+				out += "<span class='response_unanswered'>This question was not presented to the respondent due to their response to a previous question</span>";
+			} else {
+				out += data[data_dictionary[i].variable];
+			}
+			out += "</p>";
 			out += "<div class='response_note'>" + (notes === undefined ? "" : (notes[data_dictionary[i].variable] === null ? "" : "Note: " + notes[data_dictionary[i].variable])) + "</div>";
 			out += "</div>";
 		}
