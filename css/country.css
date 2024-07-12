@@ -97,7 +97,13 @@ th, td {
 }
 
 .response {
-	margin: 0.5em 4em 1em 4em;
+	margin: 6pt 48pt 3pt 48pt;
+}
+
+.response_note {
+	margin: 0pt 48pt 12pt 48pt;
+	font-style: italic;
+	font-size: 0.9em;
 }
 
 .scale {

@@ -122,6 +122,7 @@ function loadData() {
 
 	// LOAD RESPONSE DATA
 	data = data_responses.find(({country}) => country.toLowerCase() === url_country.toLowerCase());
+	notes = data_notes.find(({country}) => country.toLowerCase() === url_country.toLowerCase());
 
 	responses_el.innerHTML = "";
 	if(data != undefined) {
@@ -134,6 +135,7 @@ function loadData() {
 			out += "<p class='question'>" + data_dictionary[i].question + "</p>";
 			out += (data_dictionary[i].scale === "null" ? "null" : "<p class='scale'>(Scale:&nbsp;&nbsp;&nbsp;&nbsp;" + data_dictionary[i].scale.replaceAll(/[0-9],/g, '').replaceAll('<br>', '').replaceAll(" | ","&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;") + ")</p>");
 			out += "<p class='response'>" + (data[data_dictionary[i].variable] === "null" ? "<span class='response_unanswered'>Not answered</span>" : data[data_dictionary[i].variable]) + "</p>";
+			out += "<div class='response_note'>" + (notes[data_dictionary[i].variable] === null ? "" : "Note: " + notes[data_dictionary[i].variable]) + "</div>";
 			out += "</div>";
 		}
 		responses_el.innerHTML = out;
