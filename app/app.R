@@ -1,8 +1,8 @@
 library(shiny)
 library(plotly)
 library(bslib)        # Required for input_switch()
-library(countrycode)
-library(tidyverse)
+library(dplyr)
+library(tidyr)
 
 scores <- read.csv("scores.csv")
 org_char <- read.csv("inclusion.csv")
@@ -78,10 +78,6 @@ questions <- read.csv("questions.csv", header = FALSE) |>
   t() |> as.data.frame()
 colnames(questions) <- questions[1,]
 questions <- questions[-1,]
-
-custom_country_codes <- c("Kosovo" = "KSV", "Scotland" = "GBR")
-scores$iso <- countrycode(scores$country, "country.name", "iso3c", custom_match = custom_country_codes)
-org_char$iso <- countrycode(org_char$country, "country.name", "iso3c", custom_match = custom_country_codes)
 
 score_rounding <- 2
 
