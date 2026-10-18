@@ -5,3 +5,4 @@
 .DS_Store
 import_data.R
 rsconnect
+.quarto
