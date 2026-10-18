@@ -59,3 +59,51 @@ main.content {
 /* Static pages ported from the Shiny app */
 h5 { margin-top: 1rem; }
 .subtitle { margin-top: 0; }
+
+/* Bottom toolbar */
+.nav-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  min-height: 0;
+  padding: 0.4rem 1.25rem;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+/* Keep the copyright on one line */
+.nav-footer .nav-footer-left,
+.nav-footer .nav-footer-right {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.nav-footer .nav-footer-center {
+  display: none;
+}
+.nav-footer {
+  justify-content: space-between;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 0.25rem 0.9rem;
+  border: 1px solid white;
+  border-radius: 4px;
+  color: white !important;
+  text-decoration: none !important;
+  font-weight: 600;
+}
+.contact-btn:hover { background: white; color: #0000cc !important; }
+
+/* Keep page content from being hidden behind the fixed toolbar */
+body { padding-bottom: 3rem; }
+
+/* Allow wrapping again on small screens, where one line won't fit */
+@media (max-width: 576px) {
+  .nav-footer .nav-footer-left,
+  .nav-footer .nav-footer-right {
+    white-space: normal;
+  }
+}

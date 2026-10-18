@@ -27,6 +27,12 @@ website:
         text: Methods
       - href: about.qmd
         text: About Us
+  page-footer:
+    background: "#0000cc"
+    foreground: white
+    border: false
+    left: "© 2026 Down Syndrome Societal Services and Supports Working Group. All rights reserved."
+    right: '<a class="contact-btn" href="mailto:BSKOTKO@mgh.harvard.edu,dan.kats@childrens.harvard.edu?subject=DS-4S%20Website">Contact</a>'
 
 format:
   html:
