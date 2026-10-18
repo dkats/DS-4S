@@ -33,7 +33,7 @@ regionScores = {
   const rows = scoreRows(row);
   return html`<div id="region-scores"><table class="table">
       <thead><tr><th></th><th>Score</th><th>Rank</th></tr></thead>
-      <<tbody>${rows.map(r => html`<tr class=${r.key === "all_domain" ? "overall" : ""}>
+      <tbody>${rows.map(r => html`<tr class=${r.key === "all_domain" ? "overall" : ""}>
       <td style=${"color:" + r.color}>${r.label}</td>
       <td style=${"color:" + r.color}>${r.score}</td>
       <td style=${"color:" + r.color}>${r.rank}</td>

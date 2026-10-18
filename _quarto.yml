@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs
   resources:
-    - .nojekyll
+    - CNAME
 
 website:
   title: "DS-4S"
