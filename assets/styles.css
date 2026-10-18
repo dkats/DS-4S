@@ -1,6 +1,10 @@
 body, .navbar { font-family: "Open Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
 #quarto-content { padding-top: 0; }
-main.content { margin-top: 0; padding-top: 0; }
+main.content { 
+    margin-top: 0; 
+    padding: 0; 
+    grid-column: screen-start-inset / screen-end-inset !important;
+}
 .navbar-nav .nav-link { font-size: 0.95rem; }
 
 /* Map page controls */

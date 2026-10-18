@@ -205,9 +205,22 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
 export function mapLayout(domain) {
   const label = DOMAIN_LIST.find(d => d[1] === domain)[0];
   return {
-    title: { text: label, font: { size: 30 } },
-    geo: { showregions: true, showframe: false, showcoastlines: true, projection: { type: "equirectangular" } },
-    margin: { t: 100, l: 0, r: 0, b: 0 },
+    title: { text: label, font: { size: 30 }, x: 0.5, xanchor: "center", y: 0.95, yanchor: "top" },
+    geo: {
+      showregions: true,
+      showframe: false,
+      showcoastlines: true,
+      coastlinecolor: "black",
+      coastlinewidth: 0.5,
+      showcountries: true,
+      countrycolor: "black",
+      countrywidth: 0.5,
+      projection: { type: "equirectangular" },   // zoom in a bit
+      lonaxis: { range: [-170, 180] },                        // trims empty Pacific edge
+      lataxis: { range: [-58, 85] },   // crops empty Antarctica / Arctic space
+      domain: { x: [0, 1], y: [0, 1] }
+    },
+    margin: { t: 20, l: 0, r: 0, b: 0 },
     font: { family: "Open Sans, sans-serif" },
     legend: {
       x: 1.02,

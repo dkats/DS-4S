@@ -25,7 +25,7 @@ viewof showExcluded = Inputs.toggle({label: "Show excluded regions?", value: fal
 ```{ojs}
 //| echo: false
 mapDiv = {
-  const div = html`<div style="width:100%;aspect-ratio:2/1"></div>`;
+  const div = html`<div style="width:100%;aspect-ratio:2.4/1"></div>`;
   yield div;
   const traces = buildMapTraces(scores, inclusion, domain, showExcluded);
   await Plotly.newPlot(div, traces, mapLayout(domain), {responsive: true, displaylogo: false});
