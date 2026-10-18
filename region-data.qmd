@@ -8,7 +8,7 @@ import {DOMAIN_LIST, QUESTION_DOMAIN_CLASS, parseQuestions, firstByRegion, score
 dsv = require("d3-dsv@3")
 scores = FileAttachment("data/scores.csv").csv({typed: true})
 inclusion = FileAttachment("data/inclusion.csv").csv({typed: true})
-responses = firstByRegion(await FileAttachment("data/responses.csv").csv(), "Region")
+responses = firstByRegion(await FileAttachment("data/responses.csv").csv(), "region")
 questions = parseQuestions(dsv.csvParseRows(await FileAttachment("data/questions.csv").text()))
 regions = [...new Set(inclusion.filter(r => r.include === "Yes").map(r => r.region))].sort()
 initialRegion = decodeURIComponent(location.hash.slice(1))
@@ -43,7 +43,7 @@ regionScores = {
 //| echo: false
 regionResponses = {
   if (!region) return html``;
-  const row = responses.find(r => r.Region === region);
+  const row = responses.find(r => r.region === region);
   if (!row) return html``;
   return html`<div class="responses">${questions.map(q => html`<div class=${QUESTION_DOMAIN_CLASS[q.domain] || ""}>
     <strong class="question">${q.question}</strong>
