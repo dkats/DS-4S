@@ -27,11 +27,23 @@ export const QUESTION_DOMAIN_CLASS = {
   "Social and Policy Issues": "SocialandPolicyIssues"
 };
 
+// Treats null, "", "NA", "N/A", NaN and any other non-numeric value as missing (null).
+export function num(x) {
+  if (x === null || x === undefined) return null;
+  if (typeof x === "string") {
+    const t = x.trim();
+    if (t === "" || /^(na|n\/a|nan|null)$/i.test(t)) return null;
+    x = Number(t);
+  }
+  return typeof x === "number" && Number.isFinite(x) ? x : null;
+}
+
 const EN_DASH = "\u2013";
 const EM_DASH = "\u2014";
 
 export function ordinal(n) {
-  if (n === null || n === undefined || Number.isNaN(n)) return "";
+  n = num(n);
+  if (n === null) return "";
   const mod100 = n % 100;
   let suffix = "th";
   if (!(mod100 >= 11 && mod100 <= 13)) {
@@ -41,7 +53,8 @@ export function ordinal(n) {
 }
 
 export function fmtScore(x, digits = 2) {
-  if (x === null || x === undefined || Number.isNaN(x)) return EM_DASH;
+  x = num(x);
+  if (x === null) return EM_DASH;
   return x.toFixed(digits).replace("-", EN_DASH);
 }
 
@@ -60,8 +73,8 @@ export function gradient(color, startFrac = 0.2) {
 function hoverText(row) {
   const lines = DOMAIN_LIST.map(([label, key]) => {
     const score = fmtScore(row[`${key}_score`]);
-    const rank = row[`${key}_rank`];
-    const r = rank === null || rank === undefined ? "" : ` (${ordinal(rank)})`;
+    const rank = num(row[`${key}_rank`]);
+    const r = rank === null ? "" : ` (${ordinal(rank)})`;
     return `${label}: ${score}${r}`;
   });
   return `<b>${row.region}</b><br>` + lines.join("<br>");
@@ -108,11 +121,11 @@ export function excludedRegions(inclusion) {
 
 export function buildMapTraces(scores, inclusion, domain, showExcluded) {
   const key = `${domain}_score`;
-  const valid = scores.filter(r => r[key] !== null && r[key] !== undefined);
-  const missing = scores.filter(r => r[key] === null || r[key] === undefined);
-  const zs = valid.map(r => r[key]);
-  const zmin = Math.min(...zs);
-  const zmax = Math.max(...zs);
+  const valid = scores.filter(r => num(r[key]) !== null);
+  const missing = scores.filter(r => num(r[key]) === null);
+  const zs = valid.map(r => num(r[key]));
+  const zmin = zs.length ? Math.min(...zs) : 0;
+  const zmax = zs.length ? Math.max(...zs) : 0;
 
   const traces = [];
 
@@ -201,14 +214,14 @@ export function firstByRegion(rows, field) {
 
 export function scoreRows(scoreRow) {
   return DOMAIN_LIST.map(([label, key]) => {
-    const s = scoreRow[`${key}_score`];
-    const r = scoreRow[`${key}_rank`];
+    const s = num(scoreRow[`${key}_score`]);
+    const r = num(scoreRow[`${key}_rank`]);
     return {
       label,
       key,
       color: DOMAIN_COLORS[key],
-      score: s === null || s === undefined ? EM_DASH : s.toFixed(1).replace("-", EN_DASH),
-      rank: r === null || r === undefined ? EM_DASH : String(r)
+      score: s === null ? EM_DASH : s.toFixed(1).replace("-", EN_DASH),
+      rank: r === null ? EM_DASH : String(r)
     };
   });
 }
