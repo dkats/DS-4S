@@ -1,0 +1,41 @@
+---
+pagetitle: "DS-4S"
+---
+
+```{ojs}
+//| echo: false
+Plotly = require("plotly.js-dist-min@2.35.2")
+import {DOMAIN_LIST, buildMapTraces, mapLayout} from "./assets/helpers.js"
+scores = FileAttachment("data/scores.csv").csv({typed: true})
+inclusion = FileAttachment("data/inclusion.csv").csv({typed: true})
+```
+
+::: {.controls}
+```{ojs}
+//| echo: false
+viewof domain = Inputs.select(new Map(DOMAIN_LIST), {label: "Ranking Category:", value: "all_domain"})
+```
+
+```{ojs}
+//| echo: false
+viewof showExcluded = Inputs.toggle({label: "Show excluded regions?", value: false})
+```
+:::
+
+```{ojs}
+//| echo: false
+mapDiv = {
+  const div = html`<div style="width:100%;height:680px"></div>`;
+  yield div;
+  const traces = buildMapTraces(scores, inclusion, domain, showExcluded);
+  await Plotly.newPlot(div, traces, mapLayout(domain), {responsive: true, displaylogo: false});
+  div.on("plotly_click", ev => {
+    const p = ev.points[0];
+    if (p.curveNumber > 1) return;               // excluded regions have no data page
+    const row = scores.find(r => r.iso === p.location);
+    if (row) window.location.href = `region-data.html#${encodeURIComponent(row.region)}`;
+  });
+}
+```
+
+<p style="text-align:center;color:gray;font-size:0.9rem">Click a region to see its data.</p>

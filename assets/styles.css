@@ -1,0 +1,29 @@
+body, .navbar { font-family: "Open Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+#quarto-content { padding-top: 0.5rem; }
+.navbar-nav .nav-link { font-size: 0.95rem; }
+
+/* Map page controls */
+.controls { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; align-items: center; }
+.controls form { margin: 0; }
+
+/* Region page */
+.region-picker { display: flex; justify-content: center; margin: 10px auto; }
+#region-scores table { margin: 0 auto; width: auto; min-width: 22rem; }
+#region-scores th, #region-scores td { text-align: center; }
+#region-scores td:first-child { text-align: right; font-weight: bold; }
+#region-scores tr.overall { border-top: 1px solid rgba(0,0,0,.1); border-bottom: 1px solid rgba(0,0,0,.1); }
+.responses { max-width: 900px; margin: 1rem auto; }
+.responses > div { padding: 0.25rem 0 0.25rem 0.6rem; margin-bottom: 0.4rem; }
+.responses .question { display: block; font-weight: 600; }
+.responses .scale { margin: 0 0 0 3em; font-style: italic; color: gray; }
+.responses .response { margin: 0 0 0 3em; }
+.CommunityInclusion { border-left: 6px solid #2a8aa9; }
+.Education { border-left: 6px solid #30a92a; }
+.Healthcare { border-left: 6px solid #d07c31; }
+.Independence { border-left: 6px solid #c1231e; }
+.SocialandPolicyIssues { border-left: 6px solid #b437af; }
+.characteristics { max-width: 900px; margin: 1.5rem auto; }
+
+/* Static pages ported from the Shiny app */
+h5 { margin-top: 1rem; }
+.subtitle { margin-top: 0; }
