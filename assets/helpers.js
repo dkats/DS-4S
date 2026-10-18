@@ -143,7 +143,12 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
       tickvals: [zmin, zmax - 0.1 * (zmax - zmin)],
       ticktext: ["Needs Improvement", "Role Model"],
       tickangle: 90,
-      ticklen: 0
+      ticklen: 0,
+      x: 1.02,
+      xanchor: "left",
+      y: 1,
+      yanchor: "top",
+      len: 0.7
     }
   });
 
@@ -176,6 +181,24 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
       });
     }
   }
+  
+    // Legend-only swatches (no data; they just draw an entry in the legend)
+  const swatch = (name, color) => ({
+    type: "scattergeo",
+    lon: [null],
+    lat: [null],
+    mode: "markers",
+    name,
+    showlegend: true,
+    hoverinfo: "skip",
+    marker: { symbol: "square", size: 12, color, line: { color: "black", width: 0.5 } }
+  });
+
+  if (missing.length) traces.push(swatch("No score due to missing response", "#7f7f7f"));
+  if (showExcluded && excludedRegions(inclusion).length) {
+    traces.push(swatch("Excluded organization", "#cccccc"));
+  }
+  
   return traces;
 }
 
@@ -185,7 +208,16 @@ export function mapLayout(domain) {
     title: { text: label, font: { size: 30 } },
     geo: { showregions: true, showframe: false, showcoastlines: true, projection: { type: "equirectangular" } },
     margin: { t: 100, l: 0, r: 0, b: 0 },
-    font: { family: "Open Sans, sans-serif" }
+    font: { family: "Open Sans, sans-serif" },
+    legend: {
+      x: 1.02,
+      xanchor: "left",
+      y: 0.2,           // just below the colorbar's bottom edge
+      yanchor: "top",
+      bgcolor: "rgba(255,255,255,0.8)",
+      itemclick: false,
+      itemdoubleclick: false
+    }
   };
 }
 
