@@ -1,5 +1,21 @@
 // Shared logic for the DS-4S site. Pure functions only (no DOM), so they can be unit-tested.
 
+// ---- Surveys ----
+// id      -> suffix used in data file names (scores_<id>.csv, etc.)
+// map     -> "world" (ISO-3 codes in the `code` column) or "usa" (2-letter state codes in `code`)
+// aspect  -> width/height ratio of the map container
+export const SURVEYS = [
+  { id: "intl_2023", label: "International 2023", map: "world", aspect: "2.4/1" },
+  { id: "usa_2026",  label: "USA 2026",           map: "usa",   aspect: "1.7/1" },
+  { id: "intl_2026", label: "International 2026", map: "world", aspect: "2.4/1" }
+].sort((a, b) => a.label.localeCompare(b.label));   // dropdown is alphabetical, whatever order entries are added in
+
+export const DEFAULT_SURVEY = "intl_2023";
+
+export const surveyById = id => SURVEYS.find(s => s.id === id) || SURVEYS.find(s => s.id === DEFAULT_SURVEY);
+
+// ---- Domains ----
+
 export const DOMAIN_LIST = [
   ["Overall", "all_domain"],
   ["Community Inclusion", "community"],
@@ -18,7 +34,7 @@ export const DOMAIN_COLORS = {
   policy: "#b437af"
 };
 
-// Question "Domain" labels (from questions.csv) -> CSS class used on the region page
+// Question "Domain" labels (from questions_*.csv) -> CSS class used on the region page
 export const QUESTION_DOMAIN_CLASS = {
   "Community Inclusion": "CommunityInclusion",
   "Education": "Education",
@@ -119,8 +135,9 @@ export function excludedRegions(inclusion) {
   return out;
 }
 
-export function buildMapTraces(scores, inclusion, domain, showExcluded) {
+export function buildMapTraces(scores, inclusion, domain, showExcluded, survey = SURVEYS[0]) {
   const key = `${domain}_score`;
+  const locationmode = survey.map === "usa" ? "USA-states" : "ISO-3";
   const valid = scores.filter(r => num(r[key]) !== null);
   const missing = scores.filter(r => num(r[key]) === null);
   const zs = valid.map(r => num(r[key]));
@@ -132,6 +149,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
   // Trace 0: regions with a score for this domain (carries the colour bar)
   traces.push({
     type: "choropleth",
+    locationmode,
     z: zs,
     locations: valid.map(r => r.code),
     text: valid.map(hoverText),
@@ -155,6 +173,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
   // Trace 1: regions with no score in this domain (grey)
   traces.push({
     type: "choropleth",
+    locationmode,
     z: missing.map(() => 0),
     locations: missing.map(r => r.code),
     text: missing.map(hoverText),
@@ -171,6 +190,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
       if (!group.length) continue;
       traces.push({
         type: "choropleth",
+        locationmode,
         z: group.map(() => 0),
         locations: group.map(c => c.code),
         text: group.map(c => `<b>${c.region}</b><br><br>` + EXCLUDED_REASONS[reason].join("<br>")),
@@ -181,8 +201,8 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
       });
     }
   }
-  
-    // Legend-only swatches (no data; they just draw an entry in the legend)
+
+  // Legend-only swatches (no data; they just draw an entry in the legend)
   const swatch = (name, color) => ({
     type: "scattergeo",
     lon: [null],
@@ -198,28 +218,45 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
   if (showExcluded && excludedRegions(inclusion).length) {
     traces.push(swatch("Excluded organization", "#cccccc"));
   }
-  
+
   return traces;
 }
 
-export function mapLayout(domain) {
-  const label = DOMAIN_LIST.find(d => d[1] === domain)[0];
-  return {
-    title: { text: label, font: { size: 30 }, x: 0.5, xanchor: "center", y: 0.95, yanchor: "top" },
-    geo: {
-      showregions: true,
+function geoLayout(survey) {
+  if (survey.map === "usa") {
+    return {
+      scope: "usa",
+      projection: { type: "albers usa" },   // places Alaska and Hawaii as insets
       showframe: false,
+      showlakes: true,
+      lakecolor: "white",
       showcoastlines: true,
       coastlinecolor: "black",
       coastlinewidth: 0.5,
-      showcountries: true,
-      countrycolor: "black",
-      countrywidth: 0.5,
-      projection: { type: "equirectangular" },   // zoom in a bit
-      lonaxis: { range: [-170, 180] },                        // trims empty Pacific edge
-      lataxis: { range: [-58, 85] },   // crops empty Antarctica / Arctic space
       domain: { x: [0, 1], y: [0, 1] }
-    },
+    };
+  }
+  return {
+    showregions: true,
+    showframe: false,
+    showcoastlines: true,
+    coastlinecolor: "black",
+    coastlinewidth: 0.5,
+    showcountries: true,
+    countrycolor: "black",
+    countrywidth: 0.5,
+    projection: { type: "equirectangular" },   // zoom in a bit
+    lonaxis: { range: [-170, 180] },           // trims empty Pacific edge
+    lataxis: { range: [-58, 85] },             // crops empty Antarctica / Arctic space
+    domain: { x: [0, 1], y: [0, 1] }
+  };
+}
+
+export function mapLayout(domain, survey = SURVEYS[0]) {
+  const label = DOMAIN_LIST.find(d => d[1] === domain)[0];
+  return {
+    title: { text: label, font: { size: 30 }, x: 0.5, xanchor: "center", y: 0.95, yanchor: "top" },
+    geo: geoLayout(survey),
     margin: { t: 20, l: 0, r: 0, b: 0 },
     font: { family: "sans-serif" },
     legend: {
@@ -236,8 +273,9 @@ export function mapLayout(domain) {
 
 // ---- Region page helpers ----
 
-// questions.csv is "wide": row 1 = IDs, row 2 = Question, row 3 = Domain, row 4 = Scale.
+// questions_*.csv is "wide": row 1 = IDs, row 2 = Question, row 3 = Domain, row 4 = Scale.
 export function parseQuestions(rows) {
+  if (!rows || rows.length < 4) return [];   // missing/empty file
   const [ids, questions, domains, scales] = rows;
   return ids.slice(1).map((id, i) => ({
     id,

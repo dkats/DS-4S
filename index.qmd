@@ -6,11 +6,16 @@ pagetitle: "DS-4S"
 //| echo: false
 Plotly = require("plotly.js-dist-min@2.35.2")
 import {DOMAIN_LIST, buildMapTraces, mapLayout} from "./assets/helpers.js"
-scores = FileAttachment("data/scores.csv").csv({typed: true})
-inclusion = FileAttachment("data/inclusion.csv").csv({typed: true})
 ```
 
+{{< include _survey.qmd >}}
+
 ::: {.controls}
+```{ojs}
+//| echo: false
+viewof surveyId = Inputs.select(new Map(SURVEYS.map(s => [s.label, s.id])), {label: "Survey:", value: initialSurvey})
+```
+
 ```{ojs}
 //| echo: false
 viewof domain = Inputs.select(new Map(DOMAIN_LIST), {label: "Ranking Category:", value: "all_domain"})
@@ -25,15 +30,19 @@ viewof showExcluded = Inputs.toggle({label: "Show excluded regions?", value: fal
 ```{ojs}
 //| echo: false
 mapDiv = {
-  const div = html`<div style="width:100%;aspect-ratio:2.4/1"></div>`;
+  if (!scores.length) {
+    yield html`<p style="text-align:center;color:gray;margin:3rem 0">Data for this survey is not available yet.</p>`;
+    return;
+  }
+  const div = html`<div style="width:100%;aspect-ratio:${survey.aspect}"></div>`;
   yield div;
-  const traces = buildMapTraces(scores, inclusion, domain, showExcluded);
-  await Plotly.newPlot(div, traces, mapLayout(domain), {responsive: true, displaylogo: false});
+  const traces = buildMapTraces(scores, inclusion, domain, showExcluded, survey);
+  await Plotly.newPlot(div, traces, mapLayout(domain, survey), {responsive: true, displaylogo: false});
   div.on("plotly_click", ev => {
     const p = ev.points[0];
     if (p.curveNumber > 1) return;               // excluded regions have no data page
     const row = scores.find(r => r.code === p.location);
-    if (row) window.location.href = `region-data.html#${encodeURIComponent(row.region)}`;
+    if (row) window.location.href = `region-data.html?survey=${survey.id}#${encodeURIComponent(row.region)}`;
   });
 }
 ```

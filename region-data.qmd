@@ -4,17 +4,26 @@ pagetitle: "Region Data"
 
 ```{ojs}
 //| echo: false
-import {DOMAIN_LIST, QUESTION_DOMAIN_CLASS, parseQuestions, firstByRegion, scoreRows, dash} from "./assets/helpers.js"
+import {QUESTION_DOMAIN_CLASS, parseQuestions, firstByRegion, scoreRows, dash} from "./assets/helpers.js"
 dsv = require("d3-dsv@3")
-scores = FileAttachment("data/scores.csv").csv({typed: true})
-inclusion = FileAttachment("data/inclusion.csv").csv({typed: true})
-responses = firstByRegion(await FileAttachment("data/responses.csv").csv(), "region")
-questions = parseQuestions(dsv.csvParseRows(await FileAttachment("data/questions.csv").text()))
+```
+
+{{< include _survey.qmd >}}
+
+```{ojs}
+//| echo: false
+responses = firstByRegion(await loadCsv(surveyFiles[survey.id].responses), "region")
+questions = parseQuestions(dsv.csvParseRows(await loadText(surveyFiles[survey.id].questions)))
 regions = [...new Set(inclusion.filter(r => r.include === "Yes").map(r => r.region))].sort()
 initialRegion = decodeURIComponent(location.hash.slice(1))
 ```
 
 ::: {.region-picker}
+```{ojs}
+//| echo: false
+viewof surveyId = Inputs.select(new Map(SURVEYS.map(s => [s.label, s.id])), {label: "Survey:", value: initialSurvey})
+```
+
 ```{ojs}
 //| echo: false
 viewof region = Inputs.select(["", ...regions], {

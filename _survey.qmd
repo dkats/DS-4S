@@ -1,0 +1,50 @@
+<!-- Shared survey-loading logic. Included by index.qmd and region-data.qmd via {{< include _survey.qmd >}}.
+     Files starting with "_" are not rendered as pages by Quarto. -->
+
+```{ojs}
+//| echo: false
+import {SURVEYS, DEFAULT_SURVEY, surveyById} from "./assets/helpers.js"
+
+// FileAttachment() needs literal paths so Quarto can copy the files into the site.
+// To add a survey: add it to SURVEYS in assets/helpers.js AND add a block here.
+surveyFiles = ({
+  intl_2023: {
+    scores:    FileAttachment("data/scores_intl_2023.csv"),
+    inclusion: FileAttachment("data/inclusion_intl_2023.csv"),
+    responses: FileAttachment("data/responses_intl_2023.csv"),
+    questions: FileAttachment("data/questions_intl_2023.csv")
+  },
+  usa_2026: {
+    scores:    FileAttachment("data/scores_usa_2026.csv"),
+    inclusion: FileAttachment("data/inclusion_usa_2026.csv"),
+    responses: FileAttachment("data/responses_usa_2026.csv"),
+    questions: FileAttachment("data/questions_usa_2026.csv")
+  },
+  intl_2026: {
+    scores:    FileAttachment("data/scores_intl_2026.csv"),
+    inclusion: FileAttachment("data/inclusion_intl_2026.csv"),
+    responses: FileAttachment("data/responses_intl_2026.csv"),
+    questions: FileAttachment("data/questions_intl_2026.csv")
+  }
+})
+
+// Initial survey: ?survey=... in the URL, else the last one picked (remembered across pages), else the default.
+initialSurvey = {
+  const fromUrl = new URLSearchParams(location.search).get("survey");
+  let fromStore = null;
+  try { fromStore = sessionStorage.getItem("ds4s-survey"); } catch (e) {}
+  return [fromUrl, fromStore].find(v => SURVEYS.some(s => s.id === v)) || DEFAULT_SURVEY;
+}
+
+// Each page defines its own `viewof surveyId` dropdown; this cell reacts to it.
+survey = surveyById(surveyId)
+
+persistSurvey = { try { sessionStorage.setItem("ds4s-survey", survey.id); } catch (e) {} }
+
+// A missing/empty file yields [] / "" instead of breaking the page.
+loadCsv  = async (file, opts) => { try { return await file.csv(opts); }  catch (e) { return []; } }
+loadText = async (file)       => { try { return await file.text(); }     catch (e) { return ""; } }
+
+scores    = loadCsv(surveyFiles[survey.id].scores,    {typed: true})
+inclusion = loadCsv(surveyFiles[survey.id].inclusion, {typed: true})
+```

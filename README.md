@@ -14,10 +14,10 @@
 4. Add a CNAME (or A) record at your DNS provider as GitHub's docs describe.
 
 ## Updating data
-Replace the four CSVs in `data/` (same columns) and re-render. No R is needed.
+Data files are `data/{scores,inclusion,responses,questions}_<survey id>.csv`
+To add a survey: add an entry to `SURVEYS` in `assets/helpers.js` and a block in `_survey.qmd`.
 
 ## Files
-- `index.qmd` map page, `country-data.qmd` country page (Observable JS + Plotly.js)
-- `assets/helpers.js` all data logic (scores, hover text, excluded countries, question parsing)
+- `index.qmd` map page, `region-data.qmd` country page (Observable JS + Plotly.js)
 - `interviews/citation/methods/about.qmd` your original HTML pages, unchanged
 - `assets/styles.css` fonts and country-page styling
