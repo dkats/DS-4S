@@ -14,17 +14,17 @@ surveyFiles = ({
     responses: FileAttachment("data/responses_intl_2023.csv"),
     questions: FileAttachment("data/questions_intl_2023.csv")
   },
-  usa_2026: {
-    scores:    FileAttachment("data/scores_usa_2026.csv"),
-    inclusion: FileAttachment("data/inclusion_usa_2026.csv"),
-    responses: FileAttachment("data/responses_usa_2026.csv"),
-    questions: FileAttachment("data/questions_usa_2026.csv")
+  usa_2025: {
+    scores:    FileAttachment("data/scores_usa_2025.csv"),
+    inclusion: FileAttachment("data/inclusion_usa_2025.csv"),
+    responses: FileAttachment("data/responses_usa_2025.csv"),
+    questions: FileAttachment("data/questions_usa_2025.csv")
   },
-  intl_2026: {
-    scores:    FileAttachment("data/scores_intl_2026.csv"),
-    inclusion: FileAttachment("data/inclusion_intl_2026.csv"),
-    responses: FileAttachment("data/responses_intl_2026.csv"),
-    questions: FileAttachment("data/questions_intl_2026.csv")
+  intl_2025: {
+    scores:    FileAttachment("data/scores_intl_2025.csv"),
+    inclusion: FileAttachment("data/inclusion_intl_2025.csv"),
+    responses: FileAttachment("data/responses_intl_2025.csv"),
+    questions: FileAttachment("data/questions_intl_2025.csv")
   }
 })
 

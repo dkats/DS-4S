@@ -6,8 +6,8 @@
 // aspect  -> width/height ratio of the map container
 export const SURVEYS = [
   { id: "intl_2023", label: "International 2023", map: "world", aspect: "2.4/1" },
-  { id: "usa_2026",  label: "USA 2026",           map: "usa",   aspect: "1.7/1" },
-  { id: "intl_2026", label: "International 2026", map: "world", aspect: "2.4/1" }
+  { id: "usa_2025",  label: "USA 2025",           map: "usa",   aspect: "1.7/1" },
+  { id: "intl_2025", label: "International 2025", map: "world", aspect: "2.4/1" }
 ].sort((a, b) => a.label.localeCompare(b.label));   // dropdown is alphabetical, whatever order entries are added in
 
 export const DEFAULT_SURVEY = "intl_2023";
