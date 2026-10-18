@@ -1,10 +1,38 @@
 body, .navbar { font-family: "Open Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
-#quarto-content { padding-top: 0.5rem; }
+#quarto-content { padding-top: 0; }
+main.content { margin-top: 0; padding-top: 0; }
 .navbar-nav .nav-link { font-size: 0.95rem; }
 
 /* Map page controls */
-.controls { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; align-items: center; }
-.controls form { margin: 0; }
+/* Map page controls */
+.controls {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+.controls > .cell,
+.controls > div {
+  flex: 0 0 auto;
+  width: auto !important;
+  margin: 0;
+}
+.controls form {
+  margin: 0;
+  width: auto !important;
+  max-width: none;
+}
+.controls form label {
+  width: auto !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
 
 /* Region page */
 .region-picker { display: flex; justify-content: center; margin: 10px auto; }
