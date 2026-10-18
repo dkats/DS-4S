@@ -18,7 +18,7 @@ viewof domain = Inputs.select(new Map(DOMAIN_LIST), {label: "Ranking Category:",
 
 ```{ojs}
 //| echo: false
-viewof showExcluded = Inputs.toggle({label: "Show excluded countries?", value: false})
+viewof showExcluded = Inputs.toggle({label: "Show excluded regions?", value: false})
 ```
 :::
 
@@ -31,11 +31,11 @@ mapDiv = {
   await Plotly.newPlot(div, traces, mapLayout(domain), {responsive: true, displaylogo: false});
   div.on("plotly_click", ev => {
     const p = ev.points[0];
-    if (p.curveNumber > 1) return;               // excluded countries have no data page
+    if (p.curveNumber > 1) return;               // excluded regions have no data page
     const row = scores.find(r => r.iso === p.location);
-    if (row) window.location.href = `country-data.html#${encodeURIComponent(row.country)}`;
+    if (row) window.location.href = `region-data.html#${encodeURIComponent(row.region)}`;
   });
 }
 ```
 
-<p style="text-align:center;color:gray;font-size:0.9rem">Click a country to see its data.</p>
+<p style="text-align:center;color:gray;font-size:0.9rem">Click a region to see its data.</p>

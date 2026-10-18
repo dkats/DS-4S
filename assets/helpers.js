@@ -18,7 +18,7 @@ export const DOMAIN_COLORS = {
   policy: "#b437af"
 };
 
-// Question "Domain" labels (from questions.csv) -> CSS class used on the country page
+// Question "Domain" labels (from questions.csv) -> CSS class used on the region page
 export const QUESTION_DOMAIN_CLASS = {
   "Community Inclusion": "CommunityInclusion",
   "Education": "Education",
@@ -64,7 +64,7 @@ function hoverText(row) {
     const r = rank === null || rank === undefined ? "" : ` (${ordinal(rank)})`;
     return `${label}: ${score}${r}`;
   });
-  return `<b>${row.country}</b><br>` + lines.join("<br>");
+  return `<b>${row.region}</b><br>` + lines.join("<br>");
 }
 
 const EXCLUDED_REASONS = {
@@ -87,8 +87,8 @@ const EXCLUDED_REASONS = {
   ]
 };
 
-// Excluded countries: one entry per ISO code that has no included organization.
-export function excludedCountries(inclusion) {
+// Excluded regions: one entry per ISO code that has no included organization.
+export function excludedRegions(inclusion) {
   const includedIso = new Set(inclusion.filter(r => r.include === "Yes").map(r => r.iso));
   const seen = new Set();
   const out = [];
@@ -101,7 +101,7 @@ export function excludedCountries(inclusion) {
     if (!membersOk && holistic) reason = "members";
     else if (membersOk && !holistic) reason = "focus";
     else if (!membersOk && !holistic) reason = "both";
-    if (reason) out.push({ country: r.country, iso: r.iso, reason });
+    if (reason) out.push({ region: r.region, iso: r.iso, reason });
   }
   return out;
 }
@@ -116,7 +116,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
 
   const traces = [];
 
-  // Trace 0: countries with a score for this domain (carries the colour bar)
+  // Trace 0: regions with a score for this domain (carries the colour bar)
   traces.push({
     type: "choropleth",
     z: zs,
@@ -134,7 +134,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
     }
   });
 
-  // Trace 1: countries with no score in this domain (grey)
+  // Trace 1: regions with no score in this domain (grey)
   traces.push({
     type: "choropleth",
     z: missing.map(() => 0),
@@ -146,16 +146,16 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
     marker: { line: { color: "black", width: 0.5 } }
   });
 
-  // Trace 2+: excluded countries (light grey), optional
+  // Trace 2+: excluded regions (light grey), optional
   if (showExcluded) {
     for (const reason of ["members", "focus", "both"]) {
-      const group = excludedCountries(inclusion).filter(c => c.reason === reason);
+      const group = excludedRegions(inclusion).filter(c => c.reason === reason);
       if (!group.length) continue;
       traces.push({
         type: "choropleth",
         z: group.map(() => 0),
         locations: group.map(c => c.iso),
-        text: group.map(c => `<b>${c.country}</b><br><br>` + EXCLUDED_REASONS[reason].join("<br>")),
+        text: group.map(c => `<b>${c.region}</b><br><br>` + EXCLUDED_REASONS[reason].join("<br>")),
         hoverinfo: "text",
         colorscale: [[0, "#cccccc"], [1, "#cccccc"]],
         showscale: false,
@@ -170,13 +170,13 @@ export function mapLayout(domain) {
   const label = DOMAIN_LIST.find(d => d[1] === domain)[0];
   return {
     title: { text: label, font: { size: 30 } },
-    geo: { showcountries: true, showframe: false, showcoastlines: true, projection: { type: "equirectangular" } },
+    geo: { showregions: true, showframe: false, showcoastlines: true, projection: { type: "equirectangular" } },
     margin: { t: 100, l: 0, r: 0, b: 0 },
     font: { family: "Open Sans, sans-serif" }
   };
 }
 
-// ---- Country page helpers ----
+// ---- Region page helpers ----
 
 // questions.csv is "wide": row 1 = IDs, row 2 = Question, row 3 = Domain, row 4 = Scale.
 export function parseQuestions(rows) {
@@ -189,8 +189,8 @@ export function parseQuestions(rows) {
   }));
 }
 
-// Matches the Shiny app: if a country has several respondent rows, the first is shown.
-export function firstByCountry(rows, field) {
+// Matches the Shiny app: if a region has several respondent rows, the first is shown.
+export function firstByRegion(rows, field) {
   const seen = new Set();
   return rows.filter(r => {
     if (seen.has(r[field])) return false;

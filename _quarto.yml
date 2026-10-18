@@ -13,8 +13,8 @@ website:
     left:
       - href: index.qmd
         text: Map
-      - href: country-data.qmd
-        text: Country Data
+      - href: region-data.qmd
+        text: Region Data
       - href: "https://redcap.partners.org/redcap/surveys/?s=J3ANH9LRYEC8CLYK"
         text: "Request Access to the Survey"
         icon: bell
