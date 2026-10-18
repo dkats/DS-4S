@@ -17,7 +17,7 @@
 Replace the four CSVs in `data/` (same columns) and re-render. No R is needed.
 
 ## Files
-- `index.qmd` map page, `region-data.qmd` region page (Observable JS + Plotly.js)
-- `assets/helpers.js` all data logic (scores, hover text, excluded regions, question parsing)
+- `index.qmd` map page, `country-data.qmd` country page (Observable JS + Plotly.js)
+- `assets/helpers.js` all data logic (scores, hover text, excluded countries, question parsing)
 - `interviews/citation/methods/about.qmd` your original HTML pages, unchanged
-- `assets/styles.css` fonts and region-page styling
+- `assets/styles.css` fonts and country-page styling

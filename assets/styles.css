@@ -6,12 +6,12 @@ body, .navbar { font-family: "Open Sans", -apple-system, "Segoe UI", Helvetica, 
 .controls { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; align-items: center; }
 .controls form { margin: 0; }
 
-/* Region page */
-.region-picker { display: flex; justify-content: center; margin: 10px auto; }
-#region-scores table { margin: 0 auto; width: auto; min-width: 22rem; }
-#region-scores th, #region-scores td { text-align: center; }
-#region-scores td:first-child { text-align: right; font-weight: bold; }
-#region-scores tr.overall { border-top: 1px solid rgba(0,0,0,.1); border-bottom: 1px solid rgba(0,0,0,.1); }
+/* Country page */
+.country-picker { display: flex; justify-content: center; margin: 10px auto; }
+#country-scores table { margin: 0 auto; width: auto; min-width: 22rem; }
+#country-scores th, #country-scores td { text-align: center; }
+#country-scores td:first-child { text-align: right; font-weight: bold; }
+#country-scores tr.overall { border-top: 1px solid rgba(0,0,0,.1); border-bottom: 1px solid rgba(0,0,0,.1); }
 .responses { max-width: 900px; margin: 1rem auto; }
 .responses > div { padding: 0.25rem 0 0.25rem 0.6rem; margin-bottom: 0.4rem; }
 .responses .question { display: block; font-weight: 600; }
