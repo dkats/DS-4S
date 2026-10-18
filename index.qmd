@@ -32,7 +32,7 @@ mapDiv = {
   div.on("plotly_click", ev => {
     const p = ev.points[0];
     if (p.curveNumber > 1) return;               // excluded regions have no data page
-    const row = scores.find(r => r.iso === p.location);
+    const row = scores.find(r => r.code === p.location);
     if (row) window.location.href = `region-data.html#${encodeURIComponent(row.region)}`;
   });
 }

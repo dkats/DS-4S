@@ -100,21 +100,21 @@ const EXCLUDED_REASONS = {
   ]
 };
 
-// Excluded regions: one entry per ISO code that has no included organization.
+// Excluded regions: one entry per ISO/state code that has no included organization.
 export function excludedRegions(inclusion) {
-  const includedIso = new Set(inclusion.filter(r => r.include === "Yes").map(r => r.iso));
+  const includedCode = new Set(inclusion.filter(r => r.include === "Yes").map(r => r.code));
   const seen = new Set();
   const out = [];
   for (const r of inclusion) {
-    if (includedIso.has(r.iso) || seen.has(r.iso)) continue;
-    seen.add(r.iso);
+    if (includedCode.has(r.code) || seen.has(r.code)) continue;
+    seen.add(r.code);
     const membersOk = r.related_to_ds === "50% - 74%" || r.related_to_ds === "75% or more";
     const holistic = r.focus === "Holistic";
     let reason = null;
     if (!membersOk && holistic) reason = "members";
     else if (membersOk && !holistic) reason = "focus";
     else if (!membersOk && !holistic) reason = "both";
-    if (reason) out.push({ region: r.region, iso: r.iso, reason });
+    if (reason) out.push({ region: r.region, code: r.code, reason });
   }
   return out;
 }
@@ -133,7 +133,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
   traces.push({
     type: "choropleth",
     z: zs,
-    locations: valid.map(r => r.iso),
+    locations: valid.map(r => r.code),
     text: valid.map(hoverText),
     hoverinfo: "text",
     colorscale: gradient(DOMAIN_COLORS[domain]),
@@ -156,7 +156,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
   traces.push({
     type: "choropleth",
     z: missing.map(() => 0),
-    locations: missing.map(r => r.iso),
+    locations: missing.map(r => r.code),
     text: missing.map(hoverText),
     hoverinfo: "text",
     colorscale: [[0, "#7f7f7f"], [1, "#7f7f7f"]],
@@ -172,7 +172,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
       traces.push({
         type: "choropleth",
         z: group.map(() => 0),
-        locations: group.map(c => c.iso),
+        locations: group.map(c => c.code),
         text: group.map(c => `<b>${c.region}</b><br><br>` + EXCLUDED_REASONS[reason].join("<br>")),
         hoverinfo: "text",
         colorscale: [[0, "#cccccc"], [1, "#cccccc"]],
