@@ -1,4 +1,4 @@
-body, .navbar { font-family: "Open Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+body, .navbar { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
 #quarto-content { padding-top: 0; }
 main.content { 
     margin-top: 0; 

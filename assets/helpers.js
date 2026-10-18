@@ -191,7 +191,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded) {
     name,
     showlegend: true,
     hoverinfo: "skip",
-    marker: { symbol: "square", size: 12, color, line: { color: "black", width: 0.5 } }
+    marker: { symbol: "square", size: 20, color, line: { color: "black", width: 0.5 } }
   });
 
   if (missing.length) traces.push(swatch("No score due to missing response", "#7f7f7f"));
@@ -221,7 +221,7 @@ export function mapLayout(domain) {
       domain: { x: [0, 1], y: [0, 1] }
     },
     margin: { t: 20, l: 0, r: 0, b: 0 },
-    font: { family: "Open Sans, sans-serif" },
+    font: { family: "sans-serif" },
     legend: {
       x: 1.02,
       xanchor: "left",
