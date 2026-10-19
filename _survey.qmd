@@ -41,8 +41,16 @@ survey = surveyById(surveyId)
 
 persistSurvey = { try { sessionStorage.setItem("ds4s-survey", survey.id); } catch (e) {} }
 
+// Trim whitespace from every string cell and every column header.
+trimRows = rows => rows.map(r => Object.fromEntries(
+  Object.entries(r).map(([k, v]) => [k.trim(), typeof v === "string" ? v.trim() : v])
+))
+
 // A missing/empty file yields [] / "" instead of breaking the page.
-loadCsv  = async (file, opts) => { try { return await file.csv(opts); }  catch (e) { return []; } }
+loadCsv = async (file, opts) => {
+  try { return trimRows(await file.csv(opts)); }
+  catch (e) { return []; }
+}
 loadText = async (file)       => { try { return await file.text(); }     catch (e) { return ""; } }
 
 scores    = loadCsv(surveyFiles[survey.id].scores,    {typed: true})

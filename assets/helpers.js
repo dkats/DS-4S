@@ -6,7 +6,7 @@
 // aspect  -> width/height ratio of the map container
 export const SURVEYS = [
   { id: "intl_2023", label: "International 2023", map: "world", aspect: "2.4/1" },
-  { id: "usa_2025",  label: "USA 2025",           map: "usa",   aspect: "1.7/1" },
+  { id: "usa_2025",  label: "USA 2025",           map: "usa",   aspect: "2.4/1" },
   { id: "intl_2025", label: "International 2025", map: "world", aspect: "2.4/1" }
 ].sort((a, b) => a.label.localeCompare(b.label));   // dropdown is alphabetical, whatever order entries are added in
 
@@ -56,6 +56,11 @@ export function num(x) {
 
 const EN_DASH = "\u2013";
 const EM_DASH = "\u2014";
+
+// Puerto Rico isn't in Plotly's "albers usa" projection, so it gets its own inset geo.
+const PR_CODES = new Set(["PR", "PRI"]);
+const isPR = (survey, code) => survey.map === "usa" && PR_CODES.has(code);
+const mapLocation = (survey, code) => (isPR(survey, code) ? "PRI" : code);
 
 export function ordinal(n) {
   n = num(n);
@@ -137,7 +142,8 @@ export function excludedRegions(inclusion) {
 
 export function buildMapTraces(scores, inclusion, domain, showExcluded, survey = SURVEYS[0]) {
   const key = `${domain}_score`;
-  const locationmode = survey.map === "usa" ? "USA-states" : "ISO-3";
+  const usa = survey.map === "usa";
+  const locationmode = usa ? "USA-states" : "ISO-3";
   const valid = scores.filter(r => num(r[key]) !== null);
   const missing = scores.filter(r => num(r[key]) === null);
   const zs = valid.map(r => num(r[key]));
@@ -146,74 +152,68 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded, survey =
 
   const traces = [];
 
-  // Trace 0: regions with a score for this domain (carries the colour bar)
-  traces.push({
-    type: "choropleth",
-    locationmode,
-    z: zs,
-    locations: valid.map(r => r.code),
-    text: valid.map(hoverText),
-    hoverinfo: "text",
+  // Builds the main trace and, for USA surveys, a matching PR inset trace.
+  // `base` holds everything except locations/z/text; `rows` are the score rows.
+  // Returns the number of traces pushed so click handling can stay predictable.
+  const addChoropleth = (rows, zFn, textFn, base) => {
+    const main = usa ? rows.filter(r => !PR_CODES.has(r.code)) : rows;
+    traces.push({
+      type: "choropleth", locationmode, hoverinfo: "text",
+      z: main.map(zFn), locations: main.map(r => r.code), text: main.map(textFn),
+      ...base
+    });
+    if (usa) {
+      const pr = rows.filter(r => PR_CODES.has(r.code));
+      // Always push (even if empty) so curveNumber ordering never shifts.
+      traces.push({
+        type: "choropleth", locationmode: "ISO-3", geo: "geo2", hoverinfo: "text",
+        z: pr.map(zFn), locations: pr.map(() => "PRI"), text: pr.map(textFn),
+        ...base, showscale: false
+      });
+    }
+  };
+
+  // Valid scores (carries the colour bar). Shared zmin/zmax so PR matches.
+  addChoropleth(valid, r => num(r[key]), hoverText, {
     colorscale: gradient(DOMAIN_COLORS[domain]),
+    zmin, zmax,
     marker: { line: { color: "black", width: 0.5 } },
     colorbar: {
       title: { text: "Score" },
       tickvals: [zmin, zmax - 0.1 * (zmax - zmin)],
       ticktext: ["Needs Improvement", "Role Model"],
-      tickangle: 90,
-      ticklen: 0,
-      x: 1.02,
-      xanchor: "left",
-      y: 1,
-      yanchor: "top",
-      len: 0.7
+      tickangle: 90, ticklen: 0,
+      x: 1.02, xanchor: "left", y: 1, yanchor: "top", len: 0.7
     }
   });
 
-  // Trace 1: regions with no score in this domain (grey)
-  traces.push({
-    type: "choropleth",
-    locationmode,
-    z: missing.map(() => 0),
-    locations: missing.map(r => r.code),
-    text: missing.map(hoverText),
-    hoverinfo: "text",
+  // Missing scores (grey)
+  addChoropleth(missing, () => 0, hoverText, {
     colorscale: [[0, "#7f7f7f"], [1, "#7f7f7f"]],
     showscale: false,
     marker: { line: { color: "black", width: 0.5 } }
   });
 
-  // Trace 2+: excluded regions (light grey), optional
+  // Excluded regions (light grey), optional
   if (showExcluded) {
     for (const reason of ["members", "focus", "both"]) {
       const group = excludedRegions(inclusion).filter(c => c.reason === reason);
       if (!group.length) continue;
-      traces.push({
-        type: "choropleth",
-        locationmode,
-        z: group.map(() => 0),
-        locations: group.map(c => c.code),
-        text: group.map(c => `<b>${c.region}</b><br><br>` + EXCLUDED_REASONS[reason].join("<br>")),
-        hoverinfo: "text",
-        colorscale: [[0, "#cccccc"], [1, "#cccccc"]],
-        showscale: false,
-        marker: { line: { color: "black", width: 0.5 } }
-      });
+      addChoropleth(group, () => 0,
+        c => `<b>${c.region}</b><br><br>` + EXCLUDED_REASONS[reason].join("<br>"), {
+          colorscale: [[0, "#cccccc"], [1, "#cccccc"]],
+          showscale: false,
+          marker: { line: { color: "black", width: 0.5 } }
+        });
     }
   }
 
-  // Legend-only swatches (no data; they just draw an entry in the legend)
+  // ...legend swatches unchanged...
   const swatch = (name, color) => ({
-    type: "scattergeo",
-    lon: [null],
-    lat: [null],
-    mode: "markers",
-    name,
-    showlegend: true,
-    hoverinfo: "skip",
+    type: "scattergeo", lon: [null], lat: [null], mode: "markers",
+    name, showlegend: true, hoverinfo: "skip",
     marker: { symbol: "square", size: 20, color, line: { color: "black", width: 0.5 } }
   });
-
   if (missing.length) traces.push(swatch("No score due to missing response", "#7f7f7f"));
   if (showExcluded && excludedRegions(inclusion).length) {
     traces.push(swatch("Excluded organization", "#cccccc"));
@@ -254,29 +254,41 @@ function geoLayout(survey) {
 
 export function mapLayout(domain, survey = SURVEYS[0]) {
   const label = DOMAIN_LIST.find(d => d[1] === domain)[0];
-  return {
+  const layout = {
     title: { text: label, font: { size: 30 }, x: 0.5, xanchor: "center", y: 0.95, yanchor: "top" },
     geo: geoLayout(survey),
     margin: { t: 20, l: 0, r: 0, b: 0 },
     font: { family: "sans-serif" },
     legend: {
-      x: 1.02,
-      xanchor: "left",
-      y: 0.2,           // just below the colorbar's bottom edge
-      yanchor: "top",
-      bgcolor: "rgba(255,255,255,0.8)",
-      itemclick: false,
-      itemdoubleclick: false
+      x: 1.02, xanchor: "left", y: 0.2, yanchor: "top",
+      bgcolor: "rgba(255,255,255,0.8)", itemclick: false, itemdoubleclick: false
     }
   };
+  if (survey.map === "usa") {
+    layout.geo2 = {
+      scope: "north america",
+      projection: { type: "mercator" },
+      lonaxis: { range: [-67.5, -65.0] },
+      lataxis: { range: [17.7, 18.6] },
+      showframe: false,
+      showland: false,
+      showcoastlines: true, coastlinecolor: "black", coastlinewidth: 0.5,
+      showcountries: false,
+      bgcolor: "rgba(0,0,0,0)",
+      // Bottom-left, beside the Alaska/Hawaii insets. Tweak to taste.
+      domain: { x: [0.80, 0.90], y: [0.02, 0.14] }
+    };
+  }
+  return layout;
 }
 
 // ---- Region page helpers ----
 
 // questions_*.csv is "wide": row 1 = IDs, row 2 = Question, row 3 = Domain, row 4 = Scale.
 export function parseQuestions(rows) {
-  if (!rows || rows.length < 4) return [];   // missing/empty file
-  const [ids, questions, domains, scales] = rows;
+  if (!rows || rows.length < 4) return [];
+  const t = s => (typeof s === "string" ? s.trim() : s);
+  const [ids, questions, domains, scales] = rows.map(row => row.map(t));
   return ids.slice(1).map((id, i) => ({
     id,
     question: questions[i + 1],

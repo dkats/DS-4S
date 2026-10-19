@@ -40,8 +40,12 @@ mapDiv = {
   await Plotly.newPlot(div, traces, mapLayout(domain, survey), {responsive: true, displaylogo: false});
   div.on("plotly_click", ev => {
     const p = ev.points[0];
-    if (p.curveNumber > 1) return;               // excluded regions have no data page
-    const row = scores.find(r => r.code === p.location);
+    const dataTraces = survey.map === "usa" ? 4 : 2;
+    if (p.curveNumber >= dataTraces) return;     // excluded regions have no data page
+    const isPuertoRico = p.location === "PRI";
+    const row = scores.find(r =>
+      r.code === p.location || (isPuertoRico && (r.code === "PR" || r.code === "PRI"))
+    );
     if (row) window.location.href = `region-data.html?survey=${survey.id}#${encodeURIComponent(row.region)}`;
   });
 }
