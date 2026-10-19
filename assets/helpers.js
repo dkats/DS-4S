@@ -276,7 +276,7 @@ export function mapLayout(domain, survey = SURVEYS[0]) {
       showcountries: false,
       bgcolor: "rgba(0,0,0,0)",
       // Bottom-left, beside the Alaska/Hawaii insets. Tweak to taste.
-      domain: { x: [0.80, 0.90], y: [0.02, 0.14] }
+      domain: { x: [0.80, 0.90], y: [0.02, 0.2] }
     };
   }
   return layout;
