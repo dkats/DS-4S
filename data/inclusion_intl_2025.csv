@@ -18,7 +18,7 @@
 "Colombia","Yes","National","Holistic","501-1,000","75% or more","COL"
 "Costa Rica","Yes","National","Holistic",">1,000","50% Ð 74%","CRI"
 "Costa Rica","Yes","National","Holistic",">1,000","75% or more","CRI"
-"C™te d'Ivoire ","No","Single city or town","Holistic","21-100","Less than 25%",NA
+"Côte d'Ivoire","No","Single city or town","Holistic","21-100","Less than 25%","CIV"
 "Croatia","Yes","National","Holistic","501-1,000","75% or more","HRV"
 "Ethiopia ","Yes","National","Holistic",">1,000","50% Ð 74%","ETH"
 "Georgia","Yes","National","Holistic",">1,000","75% or more","GEO"
@@ -56,9 +56,9 @@
 "Tanzania","Yes","National","Holistic","101-500","50% Ð 74%","TZA"
 "Trinidad & Tobago","No","National","Holistic","101-500","25% Ð 49%","TTO"
 "Trinidad & Tobago","No","A large region within one country (multiple states, provinces, or counties)","Holistic","101-500","Less than 25%","TTO"
-"TŸrkiye","Yes","A large region within one country (multiple states, provinces, or counties)","Holistic",">1,000","75% or more",NA
+"Türkiye","Yes","A large region within one country (multiple states, provinces, or counties)","Holistic",">1,000","75% or more","TUR"
 "Uganda","Yes","National","Holistic",">1,000","75% or more","UGA"
-"UK","Yes","National","Holistic",">1,000","75% or more","GBR"
+"United Kingdom","Yes","National","Holistic",">1,000","75% or more","GBR"
 "Ukraine","Yes","National","Holistic",">1,000","75% or more","UKR"
 "United States","Yes","National","Holistic",">1,000","50% Ð 74%","USA"
 "United States","No","Single city or town","Specific","101-500","50% Ð 74%","USA"
