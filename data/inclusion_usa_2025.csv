@@ -1,46 +1,46 @@
 region,include,region_size,focus,members,related_to_ds,code
-Florida,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,"501–1,000",75% or more,FL
+Florida,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,"501â€“1,000",75% or more,FL
 Texas,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,">1,000",75% or more,TX
 Illinois,No,We provide support all over the world,,">1,000",75% or more,IL
-Nevada,Yes,One state,Holistic,101–500,50% – 74%,NV
-Tennessee,No,"Region smaller than state (such as county, municipality, or township)",Specific,101–500,75% or more,TN
+Nevada,Yes,One state,Holistic,101â€“500,50% â€“ 74%,NV
+Tennessee,No,"Region smaller than state (such as county, municipality, or township)",Specific,101â€“500,75% or more,TN
 California,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,">1,000",75% or more,CA
-Missouri,Yes,More than one state,Holistic,Not a membership organization,50% – 74%,MO
-Indiana,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,IN
+Missouri,Yes,More than one state,Holistic,Not a membership organization,50% â€“ 74%,MO
+Indiana,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,IN
 Wyoming,Yes,One state,Holistic,Not a membership organization,75% or more,WY
-Colorado,No,More than one state,Holistic,Not a membership organization,25% – 49%,CO
+Colorado,No,More than one state,Holistic,Not a membership organization,25% â€“ 49%,CO
 Massachusetts,Yes,One state,Holistic,">1,000",75% or more,MA
 Indiana,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,Not a membership organization,75% or more,IN
-Delaware,Yes,One state,Holistic,"501–1,000",75% or more,DE
-New Jersey,Yes,More than one state,Holistic,101–500,75% or more,NJ
+Delaware,Yes,One state,Holistic,"501â€“1,000",75% or more,DE
+New Jersey,Yes,More than one state,Holistic,101â€“500,75% or more,NJ
 Virginia,Yes,One state,Holistic,">1,000",75% or more,VA
 Montana,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,Not a membership organization,75% or more,MT
 Kansas,Yes,More than one state,Holistic,">1,000",75% or more,KS
-Ohio,Yes,One state,Holistic,1–20,75% or more,OH
+Ohio,Yes,One state,Holistic,1â€“20,75% or more,OH
 West Virginia,No,One state,Holistic,Not a membership organization,,WV
 Wisconsin,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,Not a membership organization,75% or more,WI
 Arizona,Yes,One state,Holistic,">1,000",75% or more,AZ
 Arizona,Yes,One state,Holistic,">1,000",75% or more,AZ
-Illinois,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,21–100,75% or more,IL
-California,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,CA
-Nebraska,Yes,One state,Holistic,"501–1,000",50% – 74%,NE
-Maryland,Yes,One state,Holistic,"501–1,000",75% or more,MD
-New York,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,NY
-Washington,No,One state,Holistic,21–100,25% – 49%,WA
-Oregon,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,OR
-Puerto Rico,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,PRI
-Vermont,Yes,One state,Holistic,101–500,75% or more,VT
-Connecticut,Yes,One state,Holistic,101–500,75% or more,CT
-New Jersey,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,NJ
-Ohio,Yes,One state,Holistic,"501–1,000",75% or more,OH
-Maryland,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,21–100,75% or more,MD
-Alaska,Yes,One state,Holistic,101–500,75% or more,AK
+Illinois,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,21â€“100,75% or more,IL
+California,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,CA
+Nebraska,Yes,One state,Holistic,"501â€“1,000",50% â€“ 74%,NE
+Maryland,Yes,One state,Holistic,"501â€“1,000",75% or more,MD
+New York,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,NY
+Washington,No,One state,Holistic,21â€“100,25% â€“ 49%,WA
+Oregon,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,OR
+Puerto Rico,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,PRI
+Vermont,Yes,One state,Holistic,101â€“500,75% or more,VT
+Connecticut,Yes,One state,Holistic,101â€“500,75% or more,CT
+New Jersey,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,NJ
+Ohio,Yes,One state,Holistic,"501â€“1,000",75% or more,OH
+Maryland,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,21â€“100,75% or more,MD
+Alaska,Yes,One state,Holistic,101â€“500,75% or more,AK
 North Carolina,Yes,One state,Holistic,Not a membership organization,75% or more,NC
-Pennsylvania,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,PA
-New York,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,NY
-Alabama,Yes,One state,Holistic,"501–1,000",75% or more,AL
+Pennsylvania,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,PA
+New York,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,NY
+Alabama,Yes,One state,Holistic,"501â€“1,000",75% or more,AL
 Tennessee,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,Not a membership organization,75% or more,TN
 Idaho,No,More than one state,Holistic,Not a membership organization,,ID
 California,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,Not a membership organization,75% or more,CA
-Wisconsin,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101–500,75% or more,WI
-Michigan,No,,,"501–1,000",,MI
+Wisconsin,Yes,"Region smaller than state (such as county, municipality, or township)",Holistic,101â€“500,75% or more,WI
+Michigan,No,,,"501â€“1,000",,MI
