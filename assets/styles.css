@@ -78,11 +78,6 @@ main.content {
 .responses .question { display: block; font-weight: 600; }
 .responses .scale { margin: 0 0 0 3em; font-style: italic; color: gray; }
 .responses .response { margin: 0 0 0 3em; }
-.CommunityInclusion { border-left: 6px solid #2a8aa9; }
-.Education { border-left: 6px solid #30a92a; }
-.Healthcare { border-left: 6px solid #d07c31; }
-.Independence { border-left: 6px solid #c1231e; }
-.SocialandPolicyIssues { border-left: 6px solid #b437af; }
 .characteristics { max-width: 900px; margin: 1.5rem auto; }
 
 /* Static pages ported from the Shiny app */

@@ -3,7 +3,8 @@
 
 ```{ojs}
 //| echo: false
-import {SURVEYS, DEFAULT_SURVEY, surveyById} from "./assets/helpers.js"
+import {SURVEYS, DEFAULT_SURVEY, surveyById, parseDomains} from "./assets/helpers.js"
+domains = parseDomains(await loadCsv(surveyFiles[survey.id].domains), await scores)
 
 // FileAttachment() needs literal paths so Quarto can copy the files into the site.
 // To add a survey: add it to SURVEYS in assets/helpers.js AND add a block here.
@@ -12,19 +13,22 @@ surveyFiles = ({
     scores:    FileAttachment("data/scores_intl_2023.csv"),
     inclusion: FileAttachment("data/inclusion_intl_2023.csv"),
     responses: FileAttachment("data/responses_intl_2023.csv"),
-    questions: FileAttachment("data/questions_intl_2023.csv")
+    questions: FileAttachment("data/questions_intl_2023.csv"),
+    domains:   FileAttachment("data/domains_intl_2023.csv")
   },
   usa_2025: {
     scores:    FileAttachment("data/scores_usa_2025.csv"),
     inclusion: FileAttachment("data/inclusion_usa_2025.csv"),
     responses: FileAttachment("data/responses_usa_2025.csv"),
-    questions: FileAttachment("data/questions_usa_2025.csv")
+    questions: FileAttachment("data/questions_usa_2025.csv"),
+    domains:   FileAttachment("data/domains_usa_2025.csv")
   },
   intl_2025: {
     scores:    FileAttachment("data/scores_intl_2025.csv"),
     inclusion: FileAttachment("data/inclusion_intl_2025.csv"),
     responses: FileAttachment("data/responses_intl_2025.csv"),
-    questions: FileAttachment("data/questions_intl_2025.csv")
+    questions: FileAttachment("data/questions_intl_2025.csv"),
+    domains:   FileAttachment("data/domains_intl_2025.csv")
   }
 })
 

@@ -1,4 +1,4 @@
-region,all_domain_score,all_domain_rank,community_score,community_rank,edu_score,edu_rank,health_score,health_rank,indep_score,indep_rank,policy_score,policy_rank,code
+region,overall_score,overall_rank,comm_score,comm_rank,edu_score,edu_rank,health_score,health_rank,indep_score,indep_rank,policy_score,policy_rank,code
 Pennsylvania,27.83987,1,-0.080927,14,8.456819,1,9.129757,1,4.6555,2,7.334143,1,PA
 Massachusetts,18.85903,2,-0.080927,14,5.336561,3,8.104805,2,4.102782,3,1.61221,5,MA
 Nebraska,10.70496,3,-0.080927,14,4.071105,4,3.243198,6,3.25071,5,1.411486,7,NE

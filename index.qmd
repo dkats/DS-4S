@@ -5,7 +5,7 @@ pagetitle: "DS-4S"
 ```{ojs}
 //| echo: false
 Plotly = require("plotly.js-dist-min@2.35.2")
-import {DOMAIN_LIST, buildMapTraces, mapLayout} from "./assets/helpers.js"
+import {buildMapTraces, mapLayout} from "./assets/helpers.js"
 ```
 
 {{< include _survey.qmd >}}
@@ -18,7 +18,7 @@ viewof surveyId = Inputs.select(new Map(SURVEYS.map(s => [s.label, s.id])), {lab
 
 ```{ojs}
 //| echo: false
-viewof domain = Inputs.select(new Map(DOMAIN_LIST), {label: "Ranking Category:", value: "all_domain"})
+viewof domain = Inputs.select(new Map(domains.map(d => [d.label, d.key])), {label: "Ranking Category:", value: "overall"})
 ```
 
 ```{ojs}
@@ -36,8 +36,8 @@ mapDiv = {
   }
   const div = html`<div style="width:100%;aspect-ratio:${survey.aspect}"></div>`;
   yield div;
-  const traces = buildMapTraces(scores, inclusion, domain, showExcluded, survey);
-  await Plotly.newPlot(div, traces, mapLayout(domain, survey), {responsive: true, displaylogo: false});
+  const traces = buildMapTraces(scores, inclusion, domain, showExcluded, survey, domains);
+  await Plotly.newPlot(div, traces, mapLayout(domain, survey, domains), {responsive: true, displaylogo: false});
   div.on("plotly_click", ev => {
     const p = ev.points[0];
     const dataTraces = survey.map === "usa" ? 4 : 2;

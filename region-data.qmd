@@ -4,7 +4,7 @@ pagetitle: "Region Data"
 
 ```{ojs}
 //| echo: false
-import {QUESTION_DOMAIN_CLASS, parseQuestions, firstByRegion, scoreRows, dash} from "./assets/helpers.js"
+import {parseQuestions, questionDomainColor, firstByRegion, scoreRows, dash, warnUnmappedQuestions} from "./assets/helpers.js"
 dsv = require("d3-dsv@3")
 ```
 
@@ -16,6 +16,11 @@ responses = firstByRegion(await loadCsv(surveyFiles[survey.id].responses), "regi
 questions = parseQuestions(dsv.csvParseRows(await loadText(surveyFiles[survey.id].questions)))
 regions = [...new Set(inclusion.filter(r => r.include === "Yes").map(r => r.region))].sort()
 initialRegion = decodeURIComponent(location.hash.slice(1))
+```
+
+```{ojs}
+//| echo: false
+{ warnUnmappedQuestions(domains, questions); }
 ```
 
 ::: {.region-picker}
@@ -39,10 +44,10 @@ regionScores = {
   if (!region) return html``;
   const row = scores.find(r => r.region === region);
   if (!row) return html`<p style="text-align:center">No scores available for this region.</p>`;
-  const rows = scoreRows(row);
+  const rows = scoreRows(row, domains);
   return html`<div id="region-scores"><table class="table">
       <thead><tr><th></th><th>Score</th><th>Rank</th></tr></thead>
-      <tbody>${rows.map(r => html`<tr class=${r.key === "all_domain" ? "overall" : ""}>
+      <tbody>${rows.map(r => html`<tr class=${r.key === "overall" ? "overall" : ""}>
       <td style=${"color:" + r.color}>${r.label}</td>
       <td style=${"color:" + r.color}>${r.score}</td>
       <td style=${"color:" + r.color}>${r.rank}</td>
@@ -57,7 +62,7 @@ regionResponses = {
   if (!region) return html``;
   const row = responses.find(r => r.region === region);
   if (!row) return html``;
-  return html`<div class="responses">${questions.map(q => html`<div class=${QUESTION_DOMAIN_CLASS[q.domain] || ""}>
+  return html`<div class="responses">${questions.map(q => html`<div style=${"border-left:6px solid " + questionDomainColor(domains, q.domain)}>
     <strong class="question">${q.question}</strong>
     <p class="scale">(Scale: ${q.scale})</p>
     <p class="response">${row[q.id] ? row[q.id] : "\u2014"}</p>

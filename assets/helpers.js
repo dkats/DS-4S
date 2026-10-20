@@ -15,34 +15,39 @@ export const DEFAULT_SURVEY = "intl_2023";
 export const surveyById = id => SURVEYS.find(s => s.id === id) || SURVEYS.find(s => s.id === DEFAULT_SURVEY);
 
 // ---- Domains ----
+// Domains are defined per survey in data/domains_<id>.csv (columns: label, key, color).
 
-export const DOMAIN_LIST = [
-  ["Overall", "all_domain"],
-  ["Community Inclusion", "community"],
-  ["Education", "edu"],
-  ["Healthcare", "health"],
-  ["Independence", "indep"],
-  ["Policy and Law", "policy"]
-];
+export function warnUnmappedQuestions(domains, questions) {
+  const known = new Set(domains.map(d => d.label));
+  const bad = [...new Set(questions.map(q => q.domain).filter(d => d && !known.has(d)))];
+  if (bad.length) console.warn("Question domains with no match in the domains CSV:", bad);
+}
 
-export const DOMAIN_COLORS = {
-  all_domain: "#4348db",
-  community: "#2a8aa9",
-  edu: "#30a92a",
-  health: "#d07c31",
-  indep: "#c1231e",
-  policy: "#b437af"
-};
+// Fallback used if a survey's domains file is missing or empty.
+export const OVERALL = { label: "Overall", key: "overall", color: "#4348db", label: "" };
 
-// Question "Domain" labels (from questions_*.csv) -> CSS class used on the region page
-export const QUESTION_DOMAIN_CLASS = {
-  "Community Inclusion": "CommunityInclusion",
-  "Education": "Education",
-  "Healthcare": "Healthcare",
-  "Independence": "Independence",
-  "Social and Policy Issues": "SocialandPolicyIssues"
-};
+// Cleans the CSV rows. If scores are given, drops domains whose `<key>_score` column doesn't exist.
+export function parseDomains(rows, scores = []) {
+  const cols = scores.length ? new Set(Object.keys(scores[0])) : null;
+  const out = (rows || [])
+    .map(r => ({
+      label: String(r.label ?? "").trim(),
+      key: String(r.key ?? "").trim(),
+      color: String(r.color ?? "").trim()
+    }))
+    .filter(d => d.label && d.key && d.color)
+    .filter(d => {
+      const ok = !cols || cols.has(`${d.key}_score`);
+      if (!ok) console.warn(`Domain "${d.label}": no "${d.key}_score" column in the scores file`);
+      return ok;
+    });
+  return out.length ? out : [OVERALL];
+}
 
+// Colour for a question's domain label (left border on the region page)
+export const questionDomainColor = (domains, label) =>
+  domains.find(d => d.label === (label || "").trim())?.color || "transparent";
+  
 // Treats null, "", "NA", "N/A", NaN and any other non-numeric value as missing (null).
 export function num(x) {
   if (x === null || x === undefined) return null;
@@ -91,8 +96,8 @@ export function gradient(color, startFrac = 0.2) {
   return [[0, `rgb(${start.join(",")})`], [1, color]];
 }
 
-function hoverText(row) {
-  const lines = DOMAIN_LIST.map(([label, key]) => {
+function hoverText(row, domains) {
+  const lines = domains.map(({ label, key }) => {
     const score = fmtScore(row[`${key}_score`]);
     const rank = num(row[`${key}_rank`]);
     const r = rank === null ? "" : ` (${ordinal(rank)})`;
@@ -140,8 +145,10 @@ export function excludedRegions(inclusion) {
   return out;
 }
 
-export function buildMapTraces(scores, inclusion, domain, showExcluded, survey = SURVEYS[0]) {
-  const key = `${domain}_score`;
+export function buildMapTraces(scores, inclusion, domain, showExcluded, survey = SURVEYS[0], domains = [OVERALL]) {
+  const dom = domains.find(d => d.key === domain) || domains[0] || OVERALL;
+  const key = `${dom.key}_score`;
+  const text = r => hoverText(r, domains);   // wrapper needed: .map() would pass the index as 2nd arg
   const usa = survey.map === "usa";
   const locationmode = usa ? "USA-states" : "ISO-3";
   const valid = scores.filter(r => num(r[key]) !== null);
@@ -174,8 +181,8 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded, survey =
   };
 
   // Valid scores (carries the colour bar). Shared zmin/zmax so PR matches.
-  addChoropleth(valid, r => num(r[key]), hoverText, {
-    colorscale: gradient(DOMAIN_COLORS[domain]),
+   addChoropleth(valid, r => num(r[key]), text, {
+    colorscale: gradient(dom.color),
     zmin, zmax,
     marker: { line: { color: "black", width: 0.5 } },
     colorbar: {
@@ -188,7 +195,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded, survey =
   });
 
   // Missing scores (grey)
-  addChoropleth(missing, () => 0, hoverText, {
+  addChoropleth(missing, () => 0, text, {
     colorscale: [[0, "#7f7f7f"], [1, "#7f7f7f"]],
     showscale: false,
     marker: { line: { color: "black", width: 0.5 } }
@@ -252,10 +259,10 @@ function geoLayout(survey) {
   };
 }
 
-export function mapLayout(domain, survey = SURVEYS[0]) {
-  const label = DOMAIN_LIST.find(d => d[1] === domain)[0];
+export function mapLayout(domain, survey = SURVEYS[0], domains = [OVERALL]) {
+  const label = (domains.find(d => d.key === domain) || domains[0] || OVERALL).label;
   const layout = {
-    title: { text: label, font: { size: 30 }, x: 0.5, xanchor: "center", y: 0.95, yanchor: "top" },
+    title: { text: label, font: { size: 30 }, x: 0.5, xanchor: "center", y: 0.98, yanchor: "top" },
     geo: geoLayout(survey),
     margin: { t: 20, l: 0, r: 0, b: 0 },
     font: { family: "sans-serif" },
@@ -307,14 +314,12 @@ export function firstByRegion(rows, field) {
   });
 }
 
-export function scoreRows(scoreRow) {
-  return DOMAIN_LIST.map(([label, key]) => {
+export function scoreRows(scoreRow, domains = [OVERALL]) {
+  return domains.map(({ label, key, color }) => {
     const s = num(scoreRow[`${key}_score`]);
     const r = num(scoreRow[`${key}_rank`]);
     return {
-      label,
-      key,
-      color: DOMAIN_COLORS[key],
+      label, key, color,
       score: s === null ? EM_DASH : s.toFixed(1).replace("-", EN_DASH),
       rank: r === null ? EM_DASH : String(r)
     };
