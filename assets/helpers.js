@@ -18,13 +18,13 @@ export const surveyById = id => SURVEYS.find(s => s.id === id) || SURVEYS.find(s
 // Domains are defined per survey in data/domains_<id>.csv (columns: label, key, color).
 
 export function warnUnmappedQuestions(domains, questions) {
-  const known = new Set(domains.map(d => d.label));
+  const known = new Set(domains.map(d => d.key));
   const bad = [...new Set(questions.map(q => q.domain).filter(d => d && !known.has(d)))];
-  if (bad.length) console.warn("Question domains with no match in the domains CSV:", bad);
+  if (bad.length) console.warn("Question domains with no key match in the domains CSV:", bad);
 }
 
 // Fallback used if a survey's domains file is missing or empty.
-export const OVERALL = { label: "Overall", key: "overall", color: "#4348db", label: "" };
+export const OVERALL = { label: "Overall", key: "overall", color: "#4348db" };
 
 // Cleans the CSV rows. If scores are given, drops domains whose `<key>_score` column doesn't exist.
 export function parseDomains(rows, scores = []) {
@@ -44,9 +44,9 @@ export function parseDomains(rows, scores = []) {
   return out.length ? out : [OVERALL];
 }
 
-// Colour for a question's domain label (left border on the region page)
-export const questionDomainColor = (domains, label) =>
-  domains.find(d => d.label === (label || "").trim())?.color || "transparent";
+// Colour for a question's domain key (left border on the region page)
+export const questionDomainColor = (domains, key) =>
+  domains.find(d => d.key === (key || "").trim())?.color || "transparent";
   
 // Treats null, "", "NA", "N/A", NaN and any other non-numeric value as missing (null).
 export function num(x) {
@@ -207,7 +207,7 @@ export function buildMapTraces(scores, inclusion, domain, showExcluded, survey =
       const group = excludedRegions(inclusion).filter(c => c.reason === reason);
       if (!group.length) continue;
       addChoropleth(group, () => 0,
-        c => `<b>${c.region}</b><br><br>` + EXCLUDED_REASONS[reason].join("<br>"), {
+        c => `<b>${c.region}</b><br>` + EXCLUDED_REASONS[reason].join("<br>"), {
           colorscale: [[0, "#cccccc"], [1, "#cccccc"]],
           showscale: false,
           marker: { line: { color: "black", width: 0.5 } }

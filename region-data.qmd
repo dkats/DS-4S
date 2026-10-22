@@ -20,6 +20,7 @@ initialRegion = decodeURIComponent(location.hash.slice(1))
 
 ```{ojs}
 //| echo: false
+//| output: false
 { warnUnmappedQuestions(domains, questions); }
 ```
 
@@ -48,9 +49,9 @@ regionScores = {
   return html`<div id="region-scores"><table class="table">
       <thead><tr><th></th><th>Score</th><th>Rank</th></tr></thead>
       <tbody>${rows.map(r => html`<tr class=${r.key === "overall" ? "overall" : ""}>
-      <td style=${"color:" + r.color}>${r.label}</td>
-      <td style=${"color:" + r.color}>${r.score}</td>
-      <td style=${"color:" + r.color}>${r.rank}</td>
+      <td style="color:${r.color}">${r.label}</td>
+      <td style="color:${r.color}">${r.score}</td>
+      <td style="color:${r.color}">${r.rank}</td>
       </tr>`)}</tbody>
       </table></div>`;
 }
@@ -62,7 +63,7 @@ regionResponses = {
   if (!region) return html``;
   const row = responses.find(r => r.region === region);
   if (!row) return html``;
-  return html`<div class="responses">${questions.map(q => html`<div style=${"border-left:6px solid " + questionDomainColor(domains, q.domain)}>
+  return html`<div class="responses">${questions.map(q => html`<div style="border-left:6px solid ${questionDomainColor(domains, q.domain)}">
     <strong class="question">${q.question}</strong>
     <p class="scale">(Scale: ${q.scale})</p>
     <p class="response">${row[q.id] ? row[q.id] : "\u2014"}</p>
