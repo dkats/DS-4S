@@ -6,7 +6,7 @@ export const DOMAIN_LIST = [
   ["Education", "edu"],
   ["Healthcare", "health"],
   ["Independence", "indep"],
-  ["Policy and Law", "policy"]
+  ["Social and Policy Issues", "policy"]
 ];
 
 export const DOMAIN_COLORS = {
